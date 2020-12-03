@@ -77,7 +77,7 @@ Github: `r params$github`
 
 ## Tasks
 
-Build an interactive map of COVID19 coronavirus global distribution using data from the European Centre for Disease Prevention and Control (ECDC). 
+Build an interactive map of COVID19 coronavirus global distribution using daily data from the European Centre for Disease Prevention and Control (ECDC). The data used in the analysis are country level data of current active cases, deaths, and new cases within the last two weeks. Users can switch among these components as interactive layers in the map. Hovering or clicking on data points reveals the current numbers for the active layer, as well as the country's global ranking for the selected data layer.  
 
 Data are webscraped daily from the ECDC site, then wrangled, analysed, and mapped in `R`, so data remain public and no internal databases are stored. 
 
@@ -88,7 +88,7 @@ Data are webscraped daily from the ECDC site, then wrangled, analysed, and mappe
 
 Data files and map are version controlled and stored on Github and the map is displayed as a separate link for easy sharing (see below).          
 
-See the **Process** tab for full code walkthrough.     
+See the **Process** tab for full code walkthrough and to download the `R` code file.     
 
 ## Outcomes  
 
