@@ -1,0 +1,22 @@
+name: "ecohealth"
+navbar:
+  title: "COVID19 global distribution"  
+  left:
+    - text: "Home"
+      href: index.html  
+    - text: "Process"
+      href: process.html
+    - text: "Data"
+      href: data.html
+output_dir: 'docs'
+output:
+  html_document:
+    theme: cosmo
+    highlight: kate
+    code_download: false
+    toc: yes
+    toc_depth: 5
+    toc_float: yes
+    number_sections: no  
+    self_contained: false
+

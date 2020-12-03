@@ -1,0 +1,80 @@
+---
+title: "Data"
+author: |
+ | Matt Malishev
+ | @darwinanddavis
+header-includes: \usepackage{float}
+always_allow_html: yes
+params: 
+  lesson: "Index"
+  date: !r Sys.Date()
+  session: !r sessionInfo()  
+  version: !r getRversion()
+  email: matthew.malishev [at] gmail.com 
+  github: https://github.com/darwinanddavis/ecohealth
+fontsize: 10
+geometry: margin=1in
+documentclass: article
+linkcolor: blue
+urlcolor: blue
+citecolor: pink
+output:
+  html_document:
+    highlight: tango
+    code_folding: show
+    code_download: true
+    toc: yes
+    toc_depth: 5
+    number_sections: no
+    toc_float: yes
+inludes:
+  before_body: before_body.tex
+subtitle: 
+tags:
+- nothing
+- nothingness
+classoption: portrait
+vignette: >
+  %\VignetteIndexEntry{ecohealth}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+---
+
+<!-- --------------------------------------------- -->
+<!-- rmd settings -------------------------------- -->
+
+<!-- equation rendering -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({ TeX: { equationNumbers: {autoNumber: "all"} } });
+</script>
+
+```{r, set-options, echo = F, cache = F}
+options(width=100)
+knitr::opts_chunk$set(
+ eval = F, # run all code
+ echo = T, # show code
+ comment = "",
+ tidy.opts=list(width.cutoff=100), # set width of code chunks
+ tidy = T, # make output as tidy
+ message = F,  # mask all messages
+ warning = F, # mask all warnings 
+ size="small", # set code chunk size
+ knitr::opts_chunk$set(fig.pos = 'H')
+)
+# rmarkdown::render_site() # render entire site
+```
+
+<!-- --------------------------------------------- -->
+<!-- begin doc -------------------------------- -->
+
+\newpage  
+
+******    
+
+`cv_lonlat.csv`      
+Georeferenced latitude and longitude centroids by country. Generated from `ecohealth.R`.      
+
+## Links        
+
+[Project page on Github](https://github.com/darwinanddavis/ecohealth)   
+Data from the [European Centre for Disease Prevention and Control (ECDC)](https://www.ecdc.europa.eu/en/geographical-distribution-2019-ncov-cases)         

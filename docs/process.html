@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Process</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<script src="site_libs/navigation-1.1/sourceembed.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+
+.sourceCode .row {
+  width: 100%;
+}
+.sourceCode {
+  overflow-x: auto;
+}
+.code-folding-btn {
+  margin-right: -30px;
+}
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+#rmd-source-code {
+  display: none;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">COVID19 global distribution</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="process.html">Process</a>
+</li>
+<li>
+  <a href="data.html">Data</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+<div class="btn-group pull-right">
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+<li role="separator" class="divider"></li>
+<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Process</h1>
+<h4 class="author"><div style="white-space: pre-line;">Matt Malishev
+<span class="citation">@darwinanddavis</span></div></h4>
+
+</div>
+
+
+<!-- --------------------------------------------- -->
+<!-- rmd settings -------------------------------- -->
+<!-- equation rendering -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({ TeX: { equationNumbers: {autoNumber: "all"} } });
+</script>
+<!-- --------------------------------------------- -->
+<!-- begin doc -------------------------------- -->
+
+<hr />
+<p>All data wrangling, analysis, and mapping done in <code>R</code>.<br />
+<a href="https://github.com/darwinanddavis/ecohealth/blob/master/ecohealth.R"><strong>Download full <code>R</code> code</strong></a></p>
+<p>Version: 3.5.0<br />
+R session info</p>
+<pre><code>R version 3.5.0 (2018-04-23)
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+Running under: macOS  10.14.6
+
+Matrix products: default
+BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+loaded via a namespace (and not attached):
+ [1] compiler_3.5.0       tools_3.5.0          htmltools_0.4.0.9003 base64enc_0.1-3     
+ [5] yaml_2.2.1           rmarkdown_2.2        knitr_1.28           xfun_0.14           
+ [9] digest_0.6.25        rlang_0.4.6          evaluate_0.14       </code></pre>
+<hr />
+<div id="data" class="section level3">
+<h3>Data</h3>
+<div id="load-packages" class="section level5">
+<h5>Load packages</h5>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># packages ----------------------------------------------------------------</span>
+pacman<span class="op">::</span><span class="kw">p_load</span>(maps, dplyr, leaflet, xml2, rvest, ggmap, geosphere, htmltools, mapview, purrr, rworldmap, 
+    rgeos, stringr, here, htmlwidgets, readxl, httr, readr, stringi)</code></pre></div>
+</div>
+<div id="define-functions" class="section level5">
+<h5>Define functions</h5>
+<p>Functions for getting world latitude and longitudes (polygon centroids) and matching country names from scraped web data to geocode country names</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># get geocode / rgeos rworldmaps -----------------------------------------</span>
+lonlat &lt;-<span class="st"> </span><span class="kw">getMap</span>(<span class="dt">resolution =</span> <span class="st">&quot;low&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gCentroid</span>(<span class="dt">byid =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span>as.data.frame
+lonlat<span class="op">$</span>Country &lt;-<span class="st"> </span><span class="kw">rownames</span>(lonlat)  <span class="co"># add country col</span>
+<span class="kw">colnames</span>(lonlat) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Lon&quot;</span>, <span class="st">&quot;Lat&quot;</span>, <span class="st">&quot;Country&quot;</span>)  <span class="co"># rename cols</span>
+
+<span class="co"># function for getting lonlat from rgeos database</span>
+find_lonlat &lt;-<span class="st"> </span><span class="cf">function</span>(country_string) {
+    country_string_return &lt;-<span class="st"> </span>lonlat <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Country <span class="op">%in%</span><span class="st"> </span><span class="kw">str_subset</span>(lonlat<span class="op">$</span>Country, country_string))
+    country_string_return_name &lt;-<span class="st"> </span>country_string_return <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>(<span class="st">&quot;Country&quot;</span>)  <span class="co"># get country string</span>
+    <span class="kw">print</span>(country_string_return)
+}
+
+<span class="co"># function for getting current country name in cv</span>
+set_country_name &lt;-<span class="st"> </span><span class="cf">function</span>(country_name) {
+    cv[<span class="kw">str_which</span>(cv<span class="op">$</span>Country, <span class="kw">c</span>(country_name)), <span class="st">&quot;Country&quot;</span>]
+}</code></pre></div>
+</div>
+<div id="scrape-web-data" class="section level5">
+<h5>Scrape web data</h5>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># scrape data from web \xml2</span>
+url &lt;-<span class="st"> &quot;https://www.ecdc.europa.eu/en/geographical-distribution-2019-ncov-cases&quot;</span>  <span class="co"># get daily data</span>
+
+<span class="co"># convert cv webtable to tibble \rvest</span>
+tb &lt;-<span class="st"> </span>url <span class="op">%&gt;%</span><span class="st"> </span>read_html <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_table</span>(<span class="dt">trim =</span> T)
+cv &lt;-<span class="st"> </span>tb[[<span class="dv">1</span>]]  <span class="co"># get df</span>
+cv[<span class="kw">is.na</span>(cv)] &lt;-<span class="st"> </span><span class="dv">0</span>  <span class="co"># rm nas</span>
+
+cv <span class="op">%&gt;%</span><span class="st"> </span>head</code></pre></div>
+</div>
+<div id="clean-data" class="section level5">
+<h5>Clean data</h5>
+<p>Rename data columns, remove character whitespace, and define variables</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># mod data</span>
+cv &lt;-<span class="st"> </span><span class="kw">setNames</span>(cv, <span class="kw">c</span>(<span class="st">&quot;Continent&quot;</span>, <span class="st">&quot;Country&quot;</span>, <span class="st">&quot;Cases&quot;</span>, <span class="st">&quot;Deaths&quot;</span>, <span class="st">&quot;Cases_last_15_days&quot;</span>))  <span class="co"># set names </span>
+cv<span class="op">$</span>Deaths &lt;-<span class="st"> </span>cv<span class="op">$</span>Deaths <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">stri_replace_all_charclass</span>(<span class="st">&quot;</span><span class="ch">\\</span><span class="st">p{WHITE_SPACE}&quot;</span>, <span class="st">&quot;&quot;</span>)  <span class="co"># remove middle white space</span>
+cv<span class="op">$</span>Cases &lt;-<span class="st"> </span>cv<span class="op">$</span>Cases <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">stri_replace_all_charclass</span>(<span class="st">&quot;</span><span class="ch">\\</span><span class="st">p{WHITE_SPACE}&quot;</span>, <span class="st">&quot;&quot;</span>)
+cv<span class="op">$</span>Cases_last_15_days &lt;-<span class="st"> </span>cv<span class="op">$</span>Cases_last_15_days <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">stri_replace_all_charclass</span>(<span class="st">&quot;</span><span class="ch">\\</span><span class="st">p{WHITE SPACE}&quot;</span>, <span class="st">&quot;&quot;</span>)
+cv<span class="op">$</span>Deaths &lt;-<span class="st"> </span>cv<span class="op">$</span>Deaths <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.integer</span>()  <span class="co"># set as int</span>
+cv<span class="op">$</span>Cases &lt;-<span class="st"> </span>cv<span class="op">$</span>Cases <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.integer</span>()  <span class="co"># set as int</span>
+cv<span class="op">$</span>Cases_last_15_days &lt;-<span class="st"> </span>cv<span class="op">$</span>Cases_last_15_days <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.integer</span>()
+
+
+<span class="co"># get totals</span>
+cv_total &lt;-<span class="st"> </span>cv <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">Total_cases =</span> <span class="kw">max</span>(Cases, <span class="dt">na.rm =</span> T), <span class="dt">Total_deaths =</span> <span class="kw">max</span>(Deaths, <span class="dt">na.rm =</span> T), 
+    <span class="dt">Total_recent_cases =</span> <span class="kw">max</span>(Cases_last_15_days, <span class="dt">na.rm =</span> T))
+cv &lt;-<span class="st"> </span>cv[<span class="op">!</span>cv<span class="op">$</span>Continent <span class="op">==</span><span class="st"> &quot;Total&quot;</span>, ]  <span class="co"># rm total from country df</span>
+cv &lt;-<span class="st"> </span>cv[<span class="op">!</span>cv<span class="op">$</span>Country <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Other&quot;</span>, <span class="st">&quot;Asia&quot;</span>), ]  <span class="co"># remove &#39;other&#39; country</span>
+
+<span class="co"># clean strings</span>
+cv<span class="op">$</span>Cases &lt;-<span class="st"> </span>cv<span class="op">$</span>Cases <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">str_replace</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot;&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.numeric</span>()
+cv<span class="op">$</span>Deaths &lt;-<span class="st"> </span>cv<span class="op">$</span>Deaths <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">str_replace</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot;&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.numeric</span>()
+cv<span class="op">$</span>Country &lt;-<span class="st"> </span>cv<span class="op">$</span>Country <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">str_replace_all</span>(<span class="st">&quot;_&quot;</span>, <span class="st">&quot; &quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.character</span>()</code></pre></div>
+</div>
+<div id="fix-anomalies-in-geocodes" class="section level5">
+<h5>Fix anomalies in geocodes</h5>
+<p>Match country strings in data with latitude and longitude from geocode database so that the correct country geocode is referenced</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># rename erroneous/repeated countries for getting centroid /rgeos</span>
+cv &lt;-<span class="st"> </span>cv[<span class="op">!</span>cv<span class="op">$</span>Country <span class="op">==</span><span class="st"> </span><span class="kw">str_subset</span>(cv<span class="op">$</span>Country, <span class="st">&quot;conveyance Japan&quot;</span>), ]  <span class="co"># remove japan duplicate</span>
+cv[<span class="kw">str_which</span>(cv<span class="op">$</span>Country, <span class="st">&quot;Maced&quot;</span>), <span class="st">&quot;Country&quot;</span>] &lt;-<span class="st"> </span><span class="kw">find_lonlat</span>(<span class="st">&quot;Maced&quot;</span>)<span class="op">$</span>Country
+cv[<span class="kw">str_which</span>(cv<span class="op">$</span>Country, <span class="st">&quot;Ser&quot;</span>), <span class="st">&quot;Country&quot;</span>] &lt;-<span class="st"> </span><span class="kw">find_lonlat</span>(<span class="st">&quot;Serb&quot;</span>)<span class="op">$</span>Country
+cv[<span class="kw">str_which</span>(cv<span class="op">$</span>Country, <span class="st">&quot;Holy&quot;</span>), <span class="st">&quot;Country&quot;</span>] &lt;-<span class="st"> </span><span class="kw">find_lonlat</span>(<span class="st">&quot;Vatic&quot;</span>)<span class="op">$</span>Country
+cv[<span class="kw">str_which</span>(cv<span class="op">$</span>Country, <span class="st">&quot;Brun&quot;</span>), <span class="st">&quot;Country&quot;</span>] &lt;-<span class="st"> </span><span class="kw">find_lonlat</span>(<span class="st">&quot;Brun&quot;</span>)<span class="op">$</span>Country
+cv[<span class="kw">str_which</span>(cv<span class="op">$</span>Country, <span class="st">&quot;Eswa&quot;</span>), <span class="st">&quot;Country&quot;</span>] &lt;-<span class="st"> </span><span class="kw">find_lonlat</span>(<span class="st">&quot;Swazi&quot;</span>)<span class="op">$</span>Country
+cv[<span class="kw">str_which</span>(cv<span class="op">$</span>Country, <span class="st">&quot;Ivo&quot;</span>), <span class="st">&quot;Country&quot;</span>] &lt;-<span class="st"> </span><span class="kw">find_lonlat</span>(<span class="st">&quot;Ivo&quot;</span>)<span class="op">$</span>Country
+cv[<span class="kw">str_which</span>(cv<span class="op">$</span>Country, <span class="st">&quot;Baha&quot;</span>), <span class="st">&quot;Country&quot;</span>] &lt;-<span class="st"> </span><span class="kw">find_lonlat</span>(<span class="st">&quot;Baha&quot;</span>)<span class="op">$</span>Country
+cv[<span class="kw">str_which</span>(cv<span class="op">$</span>Country, <span class="st">&quot;Timor&quot;</span>), <span class="st">&quot;Country&quot;</span>] &lt;-<span class="st"> </span><span class="kw">find_lonlat</span>(<span class="st">&quot;Timor&quot;</span>)<span class="op">$</span>Country
+cv[<span class="kw">str_which</span>(cv<span class="op">$</span>Country, <span class="st">&quot;Turks&quot;</span>), <span class="st">&quot;Country&quot;</span>] &lt;-<span class="st"> </span><span class="kw">find_lonlat</span>(<span class="st">&quot;Turks&quot;</span>)<span class="op">$</span>Country
+cv[<span class="kw">str_which</span>(cv<span class="op">$</span>Country, <span class="st">&quot;Cura&quot;</span>), <span class="st">&quot;Country&quot;</span>] &lt;-<span class="st"> </span><span class="kw">find_lonlat</span>(<span class="st">&quot;Curac&quot;</span>)<span class="op">$</span>Country
+cv[<span class="kw">str_which</span>(cv<span class="op">$</span>Country, <span class="st">&quot;Falkland&quot;</span>), <span class="st">&quot;Country&quot;</span>] &lt;-<span class="st"> </span><span class="kw">find_lonlat</span>(<span class="st">&quot;Falk&quot;</span>)<span class="op">$</span>Country
+cv[<span class="kw">str_which</span>(cv<span class="op">$</span>Country, <span class="st">&quot;Czech&quot;</span>), <span class="st">&quot;Country&quot;</span>] &lt;-<span class="st"> </span><span class="kw">find_lonlat</span>(<span class="st">&quot;Czech&quot;</span>)<span class="op">$</span>Country
+<span class="co"># repeated geocodes</span>
+cv[<span class="kw">str_which</span>(cv<span class="op">$</span>Country, <span class="st">&quot;Pales&quot;</span>), <span class="st">&quot;Country&quot;</span>] &lt;-<span class="st"> &quot;Palestine* (as neither recognition nor prejudice towards the State)&quot;</span>
+cv[<span class="kw">str_which</span>(cv<span class="op">$</span>Country, <span class="st">&quot;Congo&quot;</span>), <span class="st">&quot;Country&quot;</span>][<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw">find_lonlat</span>(<span class="st">&quot;Congo&quot;</span>)<span class="op">$</span>Country[<span class="dv">2</span>]
+cv[<span class="kw">str_which</span>(cv<span class="op">$</span>Country, <span class="st">&quot;Democratic&quot;</span>), <span class="st">&quot;Country&quot;</span>] &lt;-<span class="st"> </span><span class="kw">find_lonlat</span>(<span class="st">&quot;Congo&quot;</span>)<span class="op">$</span>Country[<span class="dv">1</span>]</code></pre></div>
+</div>
+<div id="rank-data" class="section level5">
+<h5>Rank data</h5>
+<p>Rank data variables to layer map points and remove overlapping errors</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># rank data</span>
+cv &lt;-<span class="st"> </span>cv <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(<span class="kw">desc</span>(Cases))  <span class="co"># rank data in descending order to layer map points </span>
+<span class="co"># get global case and death rankings</span>
+cv &lt;-<span class="st"> </span>cv <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">Cases_ranked =</span> (Cases <span class="op">%&gt;%</span><span class="st"> </span>dense_rank <span class="op">%&gt;%</span><span class="st"> </span>max <span class="op">+</span><span class="st"> </span><span class="dv">1</span>) <span class="op">-</span><span class="st"> </span>(Cases <span class="op">%&gt;%</span><span class="st"> </span>dense_rank), <span class="dt">Deaths_ranked =</span> (Deaths <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span>dense_rank <span class="op">%&gt;%</span><span class="st"> </span>max <span class="op">+</span><span class="st"> </span><span class="dv">1</span>) <span class="op">-</span><span class="st"> </span>(Deaths <span class="op">%&gt;%</span><span class="st"> </span>dense_rank), <span class="dt">Cases_15days_ranked =</span> (Cases_last_15_days <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span>dense_rank <span class="op">%&gt;%</span><span class="st"> </span>max <span class="op">+</span><span class="st"> </span><span class="dv">1</span>) <span class="op">-</span><span class="st"> </span>(Cases_last_15_days <span class="op">%&gt;%</span><span class="st"> </span>dense_rank))</code></pre></div>
+</div>
+<div id="create-input-variables" class="section level5">
+<h5>Create input variables</h5>
+<p>Create input variables used for defining data viz elements in the map</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># create vars</span>
+cv_country &lt;-<span class="st"> </span>cv<span class="op">$</span>Country
+cv_cases &lt;-<span class="st"> </span>cv<span class="op">$</span>Cases <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.numeric</span>()
+cv_deaths &lt;-<span class="st"> </span>cv<span class="op">$</span>Deaths <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.numeric</span>()
+cv_total_cases &lt;-<span class="st"> </span>cv_total<span class="op">$</span>Total_cases
+cv_total_deaths &lt;-<span class="st"> </span>cv_total<span class="op">$</span>Total_deaths
+cv_total_recent_cases &lt;-<span class="st"> </span>cv_total<span class="op">$</span>Total_recent_cases
+cv_recent_cases &lt;-<span class="st"> </span>cv<span class="op">$</span>Cases_last_15_days <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.numeric</span>()
+cv_cases_ranked &lt;-<span class="st"> </span>cv<span class="op">$</span>Cases_ranked <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.numeric</span>()
+cv_deaths_ranked &lt;-<span class="st"> </span>cv<span class="op">$</span>Deaths_ranked <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.numeric</span>()
+cv_cases_15days_ranked &lt;-<span class="st"> </span>cv<span class="op">$</span>Cases_15days_ranked <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.numeric</span>()</code></pre></div>
+</div>
+<div id="error-checking" class="section level5">
+<h5>Error checking</h5>
+<ul>
+<li>Run final geocode check on country geolocations to highlight any errors and troubleshoot.<br />
+</li>
+<li>Check and displace any geolocations that overlap (cosmetic)</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># match cv country lonlat to lonlat rgeos database</span>
+lonlat_final &lt;-<span class="st"> </span>lonlat[cv_country,] 
+lonlat_final  <span class="op">%&gt;%</span><span class="st">   </span><span class="co"># write to dir</span>
+<span class="st">  </span>readr<span class="op">::</span><span class="kw">write_csv</span>(here<span class="op">::</span><span class="kw">here</span>(<span class="st">&quot;data&quot;</span>,<span class="st">&quot;cv_lonlat.csv&quot;</span>))
+cv[,<span class="kw">c</span>(<span class="st">&quot;Lon&quot;</span>,<span class="st">&quot;Lat&quot;</span>)] &lt;-<span class="st"> </span>lonlat_final[,<span class="kw">c</span>(<span class="st">&quot;Lon&quot;</span>,<span class="st">&quot;Lat&quot;</span>)] <span class="co"># add lonlat to df</span>
+
+<span class="co"># check country name with latlon</span>
+<span class="cf">if</span>(<span class="kw">any</span>(lonlat_final<span class="op">$</span>Country <span class="op">==</span><span class="st"> </span>cv<span class="op">$</span>Country)<span class="op">!=</span><span class="ot">TRUE</span>){
+  <span class="kw">cat</span>(<span class="st">&quot;</span><span class="ch">\n\n\n</span><span class="st">Check country lonlat before plotting</span><span class="ch">\n\n\n</span><span class="st">&quot;</span>,<span class="kw">rep</span>(<span class="st">&quot;*&quot;</span>,<span class="dv">10</span>))}
+
+<span class="co"># fix misc latlon</span>
+nudge &lt;-<span class="st"> </span><span class="fl">0.5</span> <span class="co"># nudge overlapping latlon</span>
+cv[cv<span class="op">$</span>Country<span class="op">==</span><span class="st">&quot;Malaysia&quot;</span>,<span class="kw">c</span>(<span class="st">&quot;Lon&quot;</span>,<span class="st">&quot;Lat&quot;</span>)] &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">101.975769</span>,<span class="fl">4.210484</span>) <span class="co"># malaysia</span>
+cv[cv<span class="op">$</span>Country<span class="op">==</span>cv[<span class="kw">str_which</span>(cv<span class="op">$</span>Country,<span class="st">&quot;Pales&quot;</span>),<span class="st">&quot;Country&quot;</span>],<span class="kw">c</span>(<span class="st">&quot;Lon&quot;</span>,<span class="st">&quot;Lat&quot;</span>)] &lt;-<span class="st"> </span>cv <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Country<span class="op">==</span><span class="st">&quot;Israel&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>(<span class="kw">c</span>(<span class="st">&quot;Lon&quot;</span>,<span class="st">&quot;Lat&quot;</span>)) <span class="op">+</span><span class="st"> </span>nudge <span class="co"># displace Palestine latlon from israel</span>
+cv[cv<span class="op">$</span>Country<span class="op">==</span>cv[<span class="kw">str_which</span>(cv<span class="op">$</span>Country,<span class="st">&quot;Gibral&quot;</span>),<span class="st">&quot;Country&quot;</span>],<span class="kw">c</span>(<span class="st">&quot;Lon&quot;</span>,<span class="st">&quot;Lat&quot;</span>)] &lt;-<span class="st"> </span>cv <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Country<span class="op">==</span><span class="st">&quot;Spain&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>(<span class="kw">c</span>(<span class="st">&quot;Lon&quot;</span>,<span class="st">&quot;Lat&quot;</span>)) <span class="op">+</span><span class="st"> </span>nudge <span class="co"># displace gibraltar latlon from spain</span>
+cv[cv<span class="op">$</span>Country<span class="op">==</span>cv[<span class="kw">str_which</span>(cv<span class="op">$</span>Country,<span class="st">&quot;Bonai&quot;</span>),<span class="st">&quot;Country&quot;</span>],<span class="kw">c</span>(<span class="st">&quot;Lon&quot;</span>,<span class="st">&quot;Lat&quot;</span>)] &lt;-<span class="st"> </span>lonlat <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Country<span class="op">==</span><span class="st">&quot;Curacao&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>(<span class="kw">c</span>(<span class="st">&quot;Lon&quot;</span>,<span class="st">&quot;Lat&quot;</span>)) <span class="op">+</span><span class="st"> </span>nudge <span class="op">-</span><span class="st"> </span><span class="fl">0.3</span>  <span class="co"># displace dutch caribbean2 latlon from curacao</span>
+cv &lt;-<span class="st"> </span>cv[<span class="kw">complete.cases</span>(cv),] <span class="co"># rm final empty row</span>
+
+<span class="co"># get final latlon matrix  </span>
+lon &lt;-<span class="st"> </span>cv<span class="op">$</span>Lon ; lat &lt;-<span class="st"> </span>cv<span class="op">$</span>Lat 
+lonlat_matrix &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(lon,lat), <span class="dt">ncol =</span> <span class="dv">2</span>) <span class="co"># get matrix for arc lines  </span></code></pre></div>
+<p>Check for NAs and anomalies in newly scraped data</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># check NAs</span>
+<span class="cf">if</span> (<span class="kw">any</span>(<span class="kw">is.na</span>(cv<span class="op">$</span>Lat)) <span class="op">==</span><span class="st"> </span><span class="ot">TRUE</span>) {
+    <span class="kw">cat</span>(<span class="st">&quot;</span><span class="ch">\n\n\n</span><span class="st">Latlon in cv dataset contains NAs</span><span class="ch">\n</span><span class="st">&quot;</span>, <span class="kw">rep</span>(<span class="st">&quot;*&quot;</span>, <span class="dv">10</span>), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
+    cv[<span class="kw">which</span>(<span class="kw">is.na</span>(cv<span class="op">$</span>Lat)), <span class="st">&quot;Country&quot;</span>]
+}
+
+<span class="co"># find which countries show NAs/anomalies from latlon database</span>
+<span class="kw">find_lonlat</span>(<span class="st">&quot;&lt;insert country string&gt;&quot;</span>)
+<span class="co"># get current country name in cv for replacement</span>
+<span class="kw">set_country_name</span>(<span class="st">&quot;&lt;insert country string&gt;&quot;</span>)</code></pre></div>
+<hr />
+</div>
+</div>
+<div id="features" class="section level3">
+<h3>Features</h3>
+<div id="style" class="section level5">
+<h5>Style</h5>
+<p>Define style elements for map</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># style -------------------------------------------------------------------</span>
+custom_tile &lt;-<span class="st"> </span><span class="kw">names</span>(providers)[<span class="dv">113</span>]  <span class="co"># choose tiles</span>
+colv &lt;-<span class="st"> &quot;#F90F40&quot;</span>  <span class="co"># cases</span>
+colv2 &lt;-<span class="st"> &quot;#FA0303&quot;</span>  <span class="co"># deaths</span>
+colv3 &lt;-<span class="st"> &quot;#DA740D&quot;</span>  <span class="co"># recent cases </span>
+opac &lt;-<span class="st"> </span><span class="fl">0.7</span>
+colvec_cases &lt;-<span class="st"> </span><span class="kw">ifelse</span>(cv_cases <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, colv, <span class="ot">NaN</span>)  <span class="co"># get colvec w/o nafta cases</span>
+colvec_deaths &lt;-<span class="st"> </span><span class="kw">ifelse</span>(cv_deaths <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, colv2, <span class="ot">NaN</span>)  <span class="co"># remove 0 points</span>
+colvec_recent_cases &lt;-<span class="st"> </span><span class="kw">ifelse</span>(cv_recent_cases <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, colv3, <span class="ot">NaN</span>)  <span class="co"># remove 0 points</span></code></pre></div>
+</div>
+<div id="text" class="section level5">
+<h5>Text</h5>
+<p>Create text elements for map</p>
+<ul>
+<li>Title<br />
+</li>
+<li>Layer labels (control box)<br />
+</li>
+<li>Credits<br />
+</li>
+<li>Hover labels for data points (cases, deaths, and recent cases)<br />
+</li>
+<li>Popup labels for data points (cases, deaths, and recent cases)</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># text -------------------------------------------------------------------- title</span>
+ttl &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;&lt;div style=</span><span class="ch">\&quot;</span><span class="st">color:#F90F40;</span><span class="ch">\&quot;</span><span class="st">&gt; </span>
+<span class="st">              COVID19 </span>
+<span class="st">              &lt;/div&gt;&quot;</span>, <span class="st">&quot;global distribution&quot;</span>)
+
+<span class="co"># tr</span>
+heading_tr &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;&lt;strong&gt; Total cases &lt;div style=</span><span class="ch">\&quot;</span><span class="st">color:#F90F40; font-size:150%</span><span class="ch">\&quot;</span><span class="st">&gt;&quot;</span>, <span class="kw">format</span>(cv_total_cases, 
+    <span class="dt">big.mark =</span> <span class="st">&quot;,&quot;</span>, <span class="dt">scientific =</span> F, <span class="dt">trim =</span> T), <span class="st">&quot;&lt;/div&gt; &lt;/strong&gt;&quot;</span>, <span class="st">&quot;&lt;br/&gt;&quot;</span>, <span class="st">&quot;&lt;strong&gt; Total deaths &lt;div style=</span><span class="ch">\&quot;</span><span class="st">color:#FA0303; font-size:150%</span><span class="ch">\&quot;</span><span class="st">&gt;&quot;</span>, 
+    <span class="kw">format</span>(cv_total_deaths, <span class="dt">big.mark =</span> <span class="st">&quot;,&quot;</span>, <span class="dt">scientific =</span> F, <span class="dt">trim =</span> T), <span class="st">&quot;&lt;/div&gt; &lt;/strong&gt;&quot;</span>, <span class="st">&quot;&lt;br/&gt;&quot;</span>, <span class="st">&quot;&lt;strong&gt; Total cases in last 15 days &lt;div style=</span><span class="ch">\&quot;</span><span class="st">color:#DA740D; font-size:150%</span><span class="ch">\&quot;</span><span class="st">&gt;&quot;</span>, 
+    <span class="kw">format</span>(cv_total_recent_cases, <span class="dt">big.mark =</span> <span class="st">&quot;,&quot;</span>, <span class="dt">scientific =</span> F, <span class="dt">trim =</span> T), <span class="st">&quot;&lt;/div&gt; &lt;/strong&gt;&quot;</span>)
+
+<span class="co"># bl</span>
+heading_bl &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;Data source: &lt;a style=color:&quot;</span>, colv, <span class="st">&quot;; href=https://www.ecdc.europa.eu/en/geographical-distribution-2019-ncov-cases&gt;ECDC&lt;/a&gt;&lt;br&gt;</span>
+<span class="st">                    Last data scrape: &quot;</span>, 
+    <span class="kw">Sys.time</span>(), <span class="st">&quot;&lt;br&gt;</span>
+<span class="st">                    Designer: &lt;a style=color:&quot;</span>, colv, <span class="st">&quot;; href=https://darwinanddavis.github.io/DataPortfolio/&gt; Matt Malishev &lt;/a&gt;&lt;br&gt;</span>
+<span class="st">                    Twitter/Github: &lt;a style=color:&quot;</span>, 
+    colv, <span class="st">&quot;; href=https://github.com/darwinanddavis/worldmaps/tree/gh-pages&gt; @darwinanddavis &lt;/a&gt;&lt;br&gt;</span>
+<span class="st">                    Spot an error? &lt;a style=color:&quot;</span>, 
+    colv, <span class="st">&quot;; href=https://github.com/darwinanddavis/worldmaps/issues&gt; Submit an issue &lt;/a&gt;&quot;</span>)
+
+<span class="co"># labels ## not run</span>
+label_cases &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;&lt;strong&gt; Continent: &lt;/strong&gt;&quot;</span>, cv<span class="op">$</span>Continent, <span class="st">&quot;&lt;br/&gt; &quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map</span>(htmltools<span class="op">::</span>HTML)
+
+<span class="co"># popups</span>
+popup_cases &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;&lt;strong&gt;&quot;</span>, cv_country, <span class="st">&quot;&lt;/strong&gt;&lt;br/&gt;&lt;br/&gt;&quot;</span>, <span class="st">&quot;&lt;strong&gt; Cases &lt;/strong&gt;&lt;br/&gt;&lt;span style=color:&quot;</span>, 
+    colv, <span class="st">&quot;;&gt;&quot;</span>, cv_cases <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">format</span>(<span class="dt">big.mark =</span> <span class="st">&quot;,&quot;</span>, <span class="dt">scientific =</span> F, <span class="dt">trim =</span> T), <span class="st">&quot;&lt;/span&gt;&lt;br/&gt;&quot;</span>, <span class="st">&quot;&lt;strong&gt; Global cases ranking &lt;/strong&gt;&quot;</span>, 
+    <span class="st">&quot;&lt;br/&gt;&quot;</span>, cv_cases_ranked <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">format</span>(<span class="dt">big.mark =</span> <span class="st">&quot;,&quot;</span>, <span class="dt">scientific =</span> F, <span class="dt">trim =</span> T), <span class="st">&quot;/&quot;</span>, cv_cases_ranked <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span>max, <span class="st">&quot;&lt;br/&gt;&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map</span>(htmltools<span class="op">::</span>HTML)
+
+popup_deaths &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;&lt;strong&gt;&quot;</span>, cv_country, <span class="st">&quot;&lt;/strong&gt;&lt;br/&gt;&lt;br/&gt;&quot;</span>, <span class="st">&quot;&lt;strong&gt; Deaths &lt;/strong&gt;&lt;br/&gt;&lt;span style=color:&quot;</span>, 
+    colv2, <span class="st">&quot;;&gt;&quot;</span>, cv_deaths <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">format</span>(<span class="dt">big.mark =</span> <span class="st">&quot;,&quot;</span>, <span class="dt">scientific =</span> F, <span class="dt">trim =</span> T), <span class="st">&quot;&lt;/span&gt;&lt;br/&gt;&quot;</span>, <span class="st">&quot;&lt;strong&gt; Global death ranking &lt;/strong&gt;&quot;</span>, 
+    <span class="st">&quot;&lt;br/&gt;&quot;</span>, cv_deaths_ranked <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">format</span>(<span class="dt">big.mark =</span> <span class="st">&quot;,&quot;</span>, <span class="dt">scientific =</span> F, <span class="dt">trim =</span> T), <span class="st">&quot;/&quot;</span>, cv_deaths_ranked <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span>max) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map</span>(htmltools<span class="op">::</span>HTML)
+
+popup_recent_cases &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;&lt;strong&gt;&quot;</span>, cv_country, <span class="st">&quot;&lt;/strong&gt;&lt;br/&gt;&lt;br/&gt;&quot;</span>, <span class="st">&quot;&lt;strong&gt; Cases in last 15 days &lt;/strong&gt;&lt;br/&gt;&lt;span style=color:&quot;</span>, 
+    colv3, <span class="st">&quot;;&gt;&quot;</span>, cv_recent_cases <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">format</span>(<span class="dt">big.mark =</span> <span class="st">&quot;,&quot;</span>, <span class="dt">scientific =</span> F, <span class="dt">trim =</span> T), <span class="st">&quot;&lt;/span&gt;&lt;br/&gt;&quot;</span>, 
+    <span class="st">&quot;&lt;strong&gt; Global recent cases ranking &lt;/strong&gt;&quot;</span>, <span class="st">&quot;&lt;br/&gt;&quot;</span>, cv_cases_15days_ranked, <span class="st">&quot;/&quot;</span>, cv_cases_15days_ranked <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span>max) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map</span>(htmltools<span class="op">::</span>HTML)</code></pre></div>
+<p>Define CSS elements for webpage output</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># style options ----------------------------------------------------------- css title</span>
+map_title &lt;-<span class="st"> </span>tags<span class="op">$</span><span class="kw">style</span>(<span class="kw">HTML</span>(<span class="st">&quot;.leaflet-control.map-title { </span>
+<span class="st">       transform: translate(-50%,-20%);</span>
+<span class="st">       position: fixed !important;</span>
+<span class="st">       left: 50%;</span>
+<span class="st">       text-align: center;</span>
+<span class="st">       padding-left: 10px; </span>
+<span class="st">       padding-right: 10px; </span>
+<span class="st">       background: white; opacity: 0.5;</span>
+<span class="st">       font-size: 40px;</span>
+<span class="st">       font-family: Optima;</span>
+<span class="st">       }&quot;</span>))
+
+title &lt;-<span class="st"> </span>tags<span class="op">$</span><span class="kw">div</span>(map_title, <span class="kw">HTML</span>(ttl))
+
+<span class="co"># control box</span>
+map_control_box &lt;-<span class="st"> </span>tags<span class="op">$</span><span class="kw">style</span>(<span class="kw">HTML</span>(<span class="st">&quot;.leaflet-control.layers-base { </span>
+<span class="st">       text-align: left;</span>
+<span class="st">       padding-left: 10px; </span>
+<span class="st">       padding-right: 10px; </span>
+<span class="st">       background: white; opacity: 1;</span>
+<span class="st">       font-size: 15px;</span>
+<span class="st">       }&quot;</span>))
+
+control_box &lt;-<span class="st"> </span>tags<span class="op">$</span><span class="kw">div</span>(map_control_box, <span class="kw">HTML</span>(<span class="st">&quot;&quot;</span>))
+
+<span class="co"># text labels</span>
+style &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="st">`</span><span class="dt">font-weight</span><span class="st">`</span> =<span class="st"> &quot;normal&quot;</span>, <span class="st">`</span><span class="dt">font-family</span><span class="st">`</span> =<span class="st"> &quot;Optima&quot;</span>, <span class="dt">padding =</span> <span class="st">&quot;8px&quot;</span>)
+
+style_nafta &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">color =</span> <span class="st">&quot;#F90F40&quot;</span>, <span class="st">`</span><span class="dt">font-weight</span><span class="st">`</span> =<span class="st"> &quot;normal&quot;</span>, <span class="st">`</span><span class="dt">font-family</span><span class="st">`</span> =<span class="st"> &quot;Optima&quot;</span>, <span class="dt">padding =</span> <span class="st">&quot;8px&quot;</span>)
+
+<span class="co"># text label options</span>
+text_label_opt &lt;-<span class="st"> </span><span class="kw">labelOptions</span>(<span class="dt">noHide =</span> F, <span class="dt">direction =</span> <span class="st">&quot;top&quot;</span>, <span class="dt">textsize =</span> <span class="st">&quot;15px&quot;</span>, <span class="dt">textOnly =</span> F, <span class="dt">opacity =</span> <span class="fl">0.7</span>, 
+    <span class="dt">offset =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="dt">style =</span> style, <span class="dt">permanent =</span> T)
+
+text_label_opt_nafta &lt;-<span class="st"> </span><span class="kw">labelOptions</span>(<span class="dt">noHide =</span> T, <span class="dt">direction =</span> <span class="st">&quot;top&quot;</span>, <span class="dt">textsize =</span> <span class="st">&quot;15px&quot;</span>, <span class="dt">textOnly =</span> F, 
+    <span class="dt">opacity =</span> <span class="fl">0.7</span>, <span class="dt">offset =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="dt">style =</span> style_nafta, <span class="dt">permanent =</span> T)
+
+<span class="co"># layer options</span>
+layer_options &lt;-<span class="st"> </span><span class="kw">layersControlOptions</span>(<span class="dt">collapsed =</span> F)</code></pre></div>
+<p>Define map tileset options</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># tile options</span>
+min_zoom &lt;-<span class="st"> </span><span class="dv">3</span>
+max_zoom &lt;-<span class="st"> </span><span class="dv">10</span>
+
+<span class="co"># set max map bounds</span>
+latlon_origin &lt;-<span class="st"> </span>cv <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Country <span class="op">==</span><span class="st"> &quot;China&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>(<span class="kw">c</span>(<span class="st">&quot;Lon&quot;</span>, <span class="st">&quot;Lat&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.numeric</span>()  <span class="co"># china lonlat</span>
+max_bound1 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="dv">150</span>, <span class="dv">90</span>)
+max_bound2 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">180</span>, <span class="op">-</span><span class="dv">90</span>)
+
+<span class="co"># set map projections</span>
+proj_options &lt;-<span class="st"> </span><span class="kw">leafletOptions</span>(<span class="dt">worldCopyJump =</span> T)</code></pre></div>
+<p>Define map tileset layers and attributes</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># layers ------------------------------------------------------------------</span>
+
+<span class="co"># titles</span>
+layer1 &lt;-<span class="st"> &quot;Cases&quot;</span>
+layer2 &lt;-<span class="st"> &quot;Deaths&quot;</span>
+layer3 &lt;-<span class="st"> &quot;Cases in last 15 days&quot;</span>  
+
+<span class="co"># point size</span>
+cex &lt;-<span class="st"> </span><span class="dv">70</span>
+radius_cases &lt;-<span class="st"> </span>(<span class="kw">sqrt</span>(cv_cases) <span class="op">/</span><span class="st"> </span>cex) 
+radius_deaths &lt;-<span class="st"> </span>(<span class="kw">sqrt</span>(cv_deaths) <span class="op">/</span><span class="st"> </span>cex)
+radius_recent_cases &lt;-<span class="st"> </span>(<span class="kw">sqrt</span>(cv_recent_cases) <span class="op">/</span><span class="st"> </span>cex)
+
+<span class="co"># easy buttons </span>
+locate_me &lt;-<span class="st"> </span><span class="kw">easyButton</span>( <span class="co"># locate user</span>
+  <span class="dt">icon=</span><span class="st">&quot;fa-crosshairs&quot;</span>, <span class="dt">title=</span><span class="st">&quot;Zoom to my position&quot;</span>,
+  <span class="dt">onClick=</span><span class="kw">JS</span>(<span class="st">&quot;function(btn, map){ map.locate({setView: true}); }&quot;</span>))
+
+reset_zoom &lt;-<span class="st"> </span><span class="kw">easyButton</span>( <span class="co"># reset zoom </span>
+  <span class="dt">icon=</span><span class="st">&quot;fa-globe&quot;</span>, <span class="dt">title=</span><span class="st">&quot;Reset zoom&quot;</span>,
+  <span class="dt">onClick=</span><span class="kw">JS</span>(<span class="st">&quot;function(btn, map){ map.setZoom(3);}&quot;</span>)) </code></pre></div>
+<hr />
+</div>
+</div>
+<div id="map" class="section level3">
+<h3>Map</h3>
+<p>Build final map</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># map ---------------------------------------------------------------------</span>
+
+<span class="co"># set arc matrix</span>
+m &lt;-<span class="st"> </span><span class="kw">gcIntermediate</span>(latlon_origin,
+               lonlat_matrix,
+               <span class="dt">n=</span><span class="dv">100</span>,
+               <span class="dt">addStartEnd=</span>T,
+               <span class="dt">breakAtDateLine =</span> T,
+               <span class="dt">sp=</span>T) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">leaflet</span>(<span class="dt">options=</span>proj_options) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># add world jump </span>
+<span class="st">  </span><span class="kw">setView</span>(latlon_origin[<span class="dv">1</span>],latlon_origin[<span class="dv">2</span>],<span class="dt">zoom=</span>min_zoom) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">addTiles</span>(custom_tile,
+           <span class="dt">options =</span> <span class="kw">providerTileOptions</span>(<span class="dt">minZoom=</span>min_zoom, <span class="dt">maxZoom=</span>max_zoom) <span class="co"># set zoom bounds</span>
+           ) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">addProviderTiles</span>(custom_tile, 
+                   <span class="dt">group =</span> <span class="kw">c</span>(layer1,layer2,layer3),
+                   <span class="dt">options =</span> <span class="kw">providerTileOptions</span>(<span class="dt">minZoom=</span>min_zoom, <span class="dt">maxZoom=</span>max_zoom) <span class="co"># set zoom bounds</span>
+                   ) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">addPolylines</span>(<span class="dt">color=</span>colvec_deaths, <span class="co"># deaths</span>
+               <span class="dt">opacity =</span> opac,
+               <span class="dt">weight =</span> <span class="fl">0.3</span>,
+               <span class="dt">group =</span> layer2) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">addCircleMarkers</span>(lon,lat, <span class="co"># cases</span>
+             <span class="dt">weight=</span><span class="dv">1</span>,
+             <span class="dt">radius=</span> radius_cases,
+             <span class="dt">color=</span>colv,
+             <span class="dt">fillColor=</span>colv,
+             <span class="dt">label =</span> popup_cases,
+             <span class="dt">popup =</span> popup_cases,
+             <span class="dt">labelOptions =</span> text_label_opt,
+             <span class="dt">popupOptions =</span> text_label_opt,
+             <span class="dt">group =</span> layer1) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">addCircleMarkers</span>(lon,lat, <span class="co"># deaths </span>
+             <span class="dt">weight=</span><span class="dv">1</span>,
+             <span class="dt">radius=</span>radius_deaths,
+             <span class="dt">color=</span>colvec_deaths,
+             <span class="dt">fillColor=</span>colvec_deaths,
+             <span class="dt">label =</span> popup_deaths,  
+             <span class="dt">popup =</span> popup_deaths,
+             <span class="dt">labelOptions =</span> text_label_opt,
+             <span class="dt">popupOptions =</span> text_label_opt,
+             <span class="dt">group =</span> layer2) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">addCircleMarkers</span>(lon,lat, <span class="co"># recent cases </span>
+             <span class="dt">weight=</span><span class="dv">1</span>,
+             <span class="dt">radius=</span>radius_recent_cases,
+             <span class="dt">color=</span>colvec_recent_cases,
+             <span class="dt">fillColor=</span>colvec_recent_cases,
+             <span class="dt">label =</span> popup_recent_cases,
+             <span class="dt">popup =</span> popup_recent_cases,
+             <span class="dt">labelOptions =</span> text_label_opt, 
+             <span class="dt">popupOptions =</span> text_label_opt,
+             <span class="dt">group =</span> layer3) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">addLayersControl</span>(
+    <span class="dt">baseGroups =</span> <span class="kw">c</span>(layer1,layer2,layer3),
+    <span class="dt">options =</span> layer_options) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">hideGroup</span>(<span class="kw">c</span>(layer2,layer3)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">addControl</span>(title, <span class="st">&quot;bottomleft&quot;</span>, <span class="dt">className =</span> <span class="st">&quot;map-title&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">addControl</span>(heading_bl,<span class="st">&quot;bottomleft&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">addControl</span>(heading_tr, <span class="st">&quot;topright&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">addControl</span>(control_box, <span class="st">&quot;topright&quot;</span>, <span class="dt">className =</span> <span class="st">&quot;layers-base&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">addEasyButton</span>(reset_zoom) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">addEasyButton</span>(locate_me) 
+m</code></pre></div>
+<p>Save final output to local drive</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># save outputs</span>
+m <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">saveWidget</span>(here<span class="op">::</span><span class="kw">here</span>(<span class="st">&quot;coronavirus.html&quot;</span>))</code></pre></div>
+<p><strong>End document</strong></p>
+</div>
+
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUHJvY2VzcyIKYXV0aG9yOiB8CiB8IE1hdHQgTWFsaXNoZXYKIHwgQGRhcndpbmFuZGRhdmlzCmhlYWRlci1pbmNsdWRlczogXHVzZXBhY2thZ2V7ZmxvYXR9CmFsd2F5c19hbGxvd19odG1sOiB5ZXMKcGFyYW1zOiAKICBzZXNzaW9uOiAhciBzZXNzaW9uSW5mbygpICAKICB2ZXJzaW9uOiAhciBnZXRSdmVyc2lvbigpCiAgZW1haWw6IG1hdHRoZXcubWFsaXNoZXYgW2F0XSBnbWFpbC5jb20gCiAgZ2l0aHViOiBodHRwczovL2dpdGh1Yi5jb20vZGFyd2luYW5kZGF2aXMvZWNvaGVhbHRoCmZvbnRzaXplOiAxMApnZW9tZXRyeTogbWFyZ2luPTFpbgpkb2N1bWVudGNsYXNzOiBhcnRpY2xlCmxpbmtjb2xvcjogYmx1ZQp1cmxjb2xvcjogYmx1ZQpjaXRlY29sb3I6IHBpbmsKb3V0cHV0OgogIGh0bWxfZG9jdW1lbnQ6CiAgICBoaWdobGlnaHQ6IHRhbmdvCiAgICBjb2RlX2ZvbGRpbmc6IHNob3cKICAgIGNvZGVfZG93bmxvYWQ6IHRydWUKICAgIHRvYzogeWVzCiAgICB0b2NfZGVwdGg6IDUKICAgIG51bWJlcl9zZWN0aW9uczogbm8KICAgIHRvY19mbG9hdDogeWVzCmlubHVkZXM6CiAgYmVmb3JlX2JvZHk6IGJlZm9yZV9ib2R5LnRleApzdWJ0aXRsZTogCnRhZ3M6Ci0gbm90aGluZwotIG5vdGhpbmduZXNzCmNsYXNzb3B0aW9uOiBwb3J0cmFpdAp2aWduZXR0ZTogPgogICVcVmlnbmV0dGVJbmRleEVudHJ5e2Vjb2hlYWx0aH0KICAlXFZpZ25ldHRlRW5jb2Rpbmd7VVRGLTh9CiAgJVxWaWduZXR0ZUVuZ2luZXtrbml0cjo6cm1hcmtkb3dufQotLS0KCjwhLS0gLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tIC0tPgo8IS0tIHJtZCBzZXR0aW5ncyAtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLSAtLT4KCjwhLS0gZXF1YXRpb24gcmVuZGVyaW5nIC0tPgo8c2NyaXB0IHR5cGU9InRleHQveC1tYXRoamF4LWNvbmZpZyI+CiAgTWF0aEpheC5IdWIuQ29uZmlnKHsgVGVYOiB7IGVxdWF0aW9uTnVtYmVyczoge2F1dG9OdW1iZXI6ICJhbGwifSB9IH0pOwo8L3NjcmlwdD4KCmBgYHtyLCBzZXQtb3B0aW9ucywgZWNobyA9IEYsIGNhY2hlID0gRn0Kb3B0aW9ucyh3aWR0aD0xMDApCmtuaXRyOjpvcHRzX2NodW5rJHNldCgKIGV2YWwgPSBGLCAjIHJ1biBhbGwgY29kZQogZWNobyA9IFQsICMgc2hvdyBjb2RlCiBjb21tZW50ID0gIiIsCiB0aWR5Lm9wdHM9bGlzdCh3aWR0aC5jdXRvZmY9MTAwKSwgIyBzZXQgd2lkdGggb2YgY29kZSBjaHVua3MKIHRpZHkgPSBULCAjIG1ha2Ugb3V0cHV0IGFzIHRpZHkKIG1lc3NhZ2UgPSBGLCAgIyBtYXNrIGFsbCBtZXNzYWdlcwogd2FybmluZyA9IEYsICMgbWFzayBhbGwgd2FybmluZ3MgCiBzaXplPSJzbWFsbCIsICMgc2V0IGNvZGUgY2h1bmsgc2l6ZQoga25pdHI6Om9wdHNfY2h1bmskc2V0KGZpZy5wb3MgPSAnSCcpCikKIyBybWFya2Rvd246OnJlbmRlcl9zaXRlKCkgIyByZW5kZXIgZW50aXJlIHNpdGUKYGBgCgo8IS0tIC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLSAtLT4KPCEtLSBiZWdpbiBkb2MgLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0gLS0+CgpcbmV3cGFnZSAgCgoqKioqKiogICAgCgpBbGwgZGF0YSB3cmFuZ2xpbmcsIGFuYWx5c2lzLCBhbmQgbWFwcGluZyBkb25lIGluIGBSYC4gICAgClsqKkRvd25sb2FkIGZ1bGwgYFJgIGNvZGUqKl0oaHR0cHM6Ly9naXRodWIuY29tL2RhcndpbmFuZGRhdmlzL2Vjb2hlYWx0aC9ibG9iL21hc3Rlci9lY29oZWFsdGguUikgICAgCgpWZXJzaW9uOiBgciBwYXJhbXMkdmVyc2lvbmAgICAgIApSIHNlc3Npb24gaW5mbyAgICAgICAgIApgYGB7ciwgZXZhbD1ULGVjaG89Rn0KcGFyYW1zJHNlc3Npb24KYGBgICAgICAgCgoqKioqKiogIAoKIyMjIERhdGEgIAojIyMjIyBMb2FkIHBhY2thZ2VzCmBgYHtyfQojIHBhY2thZ2VzIC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KcGFjbWFuOjpwX2xvYWQobWFwcyxkcGx5cixsZWFmbGV0LHhtbDIscnZlc3QsZ2dtYXAsZ2Vvc3BoZXJlLGh0bWx0b29scyxtYXB2aWV3LHB1cnJyLHJ3b3JsZG1hcCxyZ2VvcyxzdHJpbmdyLGhlcmUsaHRtbHdpZGdldHMscmVhZHhsLGh0dHIscmVhZHIsc3RyaW5naSkKCmBgYAoKIyMjIyMgRGVmaW5lIGZ1bmN0aW9ucyAgIApGdW5jdGlvbnMgZm9yIGdldHRpbmcgd29ybGQgbGF0aXR1ZGUgYW5kIGxvbmdpdHVkZXMgKHBvbHlnb24gY2VudHJvaWRzKSBhbmQgbWF0Y2hpbmcgY291bnRyeSBuYW1lcyBmcm9tIHNjcmFwZWQgd2ViIGRhdGEgdG8gZ2VvY29kZSBjb3VudHJ5IG5hbWVzICAgICAKYGBge3J9CiMgZ2V0IGdlb2NvZGUgLyByZ2VvcyByd29ybGRtYXBzIC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCmxvbmxhdCA8LSBnZXRNYXAocmVzb2x1dGlvbj0ibG93IikgJT4lIAogIGdDZW50cm9pZChieWlkPVRSVUUpICU+JSAKICBhcy5kYXRhLmZyYW1lIApsb25sYXQkQ291bnRyeSA8LSByb3duYW1lcyhsb25sYXQpICMgYWRkIGNvdW50cnkgY29sCmNvbG5hbWVzKGxvbmxhdCkgPC0gYygiTG9uIiwgIkxhdCIsIkNvdW50cnkiKSAjIHJlbmFtZSBjb2xzCgojIGZ1bmN0aW9uIGZvciBnZXR0aW5nIGxvbmxhdCBmcm9tIHJnZW9zIGRhdGFiYXNlIApmaW5kX2xvbmxhdCA8LSBmdW5jdGlvbihjb3VudHJ5X3N0cmluZyl7CiAgY291bnRyeV9zdHJpbmdfcmV0dXJuIDwtIGxvbmxhdCAlPiUgZmlsdGVyKENvdW50cnkgJWluJSBzdHJfc3Vic2V0KGxvbmxhdCRDb3VudHJ5LGNvdW50cnlfc3RyaW5nKSkKICBjb3VudHJ5X3N0cmluZ19yZXR1cm5fbmFtZSA8LSBjb3VudHJ5X3N0cmluZ19yZXR1cm4gJT4lIGRwbHlyOjpzZWxlY3QoIkNvdW50cnkiKSAjIGdldCBjb3VudHJ5IHN0cmluZwogIHByaW50KGNvdW50cnlfc3RyaW5nX3JldHVybikKfQoKIyBmdW5jdGlvbiBmb3IgZ2V0dGluZyBjdXJyZW50IGNvdW50cnkgbmFtZSBpbiBjdgpzZXRfY291bnRyeV9uYW1lIDwtICBmdW5jdGlvbihjb3VudHJ5X25hbWUpewogIGN2W3N0cl93aGljaChjdiRDb3VudHJ5LGMoY291bnRyeV9uYW1lKSksIkNvdW50cnkiXSAKfQoKYGBgCgojIyMjIyBTY3JhcGUgd2ViIGRhdGEKYGBge3J9CiMgc2NyYXBlIGRhdGEgZnJvbSB3ZWIgXHhtbDIKdXJsIDwtICJodHRwczovL3d3dy5lY2RjLmV1cm9wYS5ldS9lbi9nZW9ncmFwaGljYWwtZGlzdHJpYnV0aW9uLTIwMTktbmNvdi1jYXNlcyIgIyBnZXQgZGFpbHkgZGF0YQoKIyBjb252ZXJ0IGN2IHdlYnRhYmxlIHRvIHRpYmJsZSBccnZlc3QgICAKdGIgPC0gdXJsICU+JSByZWFkX2h0bWwgJT4lIGh0bWxfdGFibGUodHJpbSA9IFQpICAKY3YgPC0gdGJbWzFdXSAjIGdldCBkZgpjdltpcy5uYShjdildIDwtIDAgIyBybSBuYXMKCmN2ICU+JSBoZWFkCmBgYAoKIyMjIyMgQ2xlYW4gZGF0YSAgICAKUmVuYW1lIGRhdGEgY29sdW1ucywgcmVtb3ZlIGNoYXJhY3RlciB3aGl0ZXNwYWNlLCBhbmQgZGVmaW5lIHZhcmlhYmxlcyAgIApgYGB7cn0KIyBtb2QgZGF0YQpjdiA8LSBzZXROYW1lcyhjdixjKCJDb250aW5lbnQiLCJDb3VudHJ5IiwiQ2FzZXMiLCJEZWF0aHMiLCJDYXNlc19sYXN0XzE1X2RheXMiKSkgIyBzZXQgbmFtZXMgCmN2JERlYXRocyA8LSBjdiREZWF0aHMgJT4lIHN0cmlfcmVwbGFjZV9hbGxfY2hhcmNsYXNzKCJcXHB7V0hJVEVfU1BBQ0V9IiwiIikgIyByZW1vdmUgbWlkZGxlIHdoaXRlIHNwYWNlCmN2JENhc2VzIDwtIGN2JENhc2VzICU+JSBzdHJpX3JlcGxhY2VfYWxsX2NoYXJjbGFzcygiXFxwe1dISVRFX1NQQUNFfSIsIiIpCmN2JENhc2VzX2xhc3RfMTVfZGF5cyA8LSBjdiRDYXNlc19sYXN0XzE1X2RheXMgJT4lIHN0cmlfcmVwbGFjZV9hbGxfY2hhcmNsYXNzKCJcXHB7V0hJVEUgU1BBQ0V9IiwiIikKY3YkRGVhdGhzIDwtIGN2JERlYXRocyAlPiUgYXMuaW50ZWdlcigpICMgc2V0IGFzIGludApjdiRDYXNlcyA8LSBjdiRDYXNlcyAlPiUgYXMuaW50ZWdlcigpICMgc2V0IGFzIGludApjdiRDYXNlc19sYXN0XzE1X2RheXMgPC0gY3YkQ2FzZXNfbGFzdF8xNV9kYXlzICU+JSBhcy5pbnRlZ2VyKCkKCgojIGdldCB0b3RhbHMKY3ZfdG90YWwgPC0gY3YgJT4lIHN1bW1hcmlzZShUb3RhbF9jYXNlcyA9IG1heChDYXNlcyxuYS5ybSA9IFQpLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgIFRvdGFsX2RlYXRocyA9IG1heChEZWF0aHMsbmEucm0gPSBUKSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICBUb3RhbF9yZWNlbnRfY2FzZXMgPSBtYXgoQ2FzZXNfbGFzdF8xNV9kYXlzLG5hLnJtID0gVCkpCmN2IDwtIGN2WyFjdiRDb250aW5lbnQ9PSJUb3RhbCIsXSAjIHJtIHRvdGFsIGZyb20gY291bnRyeSBkZgpjdiA8LSBjdlshY3YkQ291bnRyeSAlaW4lIGMoIk90aGVyIiwiQXNpYSIpLF0gIyByZW1vdmUgJ290aGVyJyBjb3VudHJ5CgojIGNsZWFuIHN0cmluZ3MKY3YkQ2FzZXMgPC0gY3YkQ2FzZXMgJT4lIHN0cl9yZXBsYWNlKCIgIiwiIikgJT4lIGFzLm51bWVyaWMoKQpjdiREZWF0aHMgPC0gY3YkRGVhdGhzICU+JSBzdHJfcmVwbGFjZSgiICIsIiIpICU+JSAgYXMubnVtZXJpYygpCmN2JENvdW50cnkgPC0gY3YkQ291bnRyeSAlPiUgc3RyX3JlcGxhY2VfYWxsKCJfIiwiICIpICU+JSBhcy5jaGFyYWN0ZXIoKQoKYGBgCgojIyMjIyBGaXggYW5vbWFsaWVzIGluIGdlb2NvZGVzICAgIApNYXRjaCBjb3VudHJ5IHN0cmluZ3MgaW4gZGF0YSB3aXRoIGxhdGl0dWRlIGFuZCBsb25naXR1ZGUgZnJvbSBnZW9jb2RlIGRhdGFiYXNlIHNvIHRoYXQgdGhlIGNvcnJlY3QgY291bnRyeSBnZW9jb2RlIGlzIHJlZmVyZW5jZWQgICAgCmBgYHtyfQojIHJlbmFtZSBlcnJvbmVvdXMvcmVwZWF0ZWQgY291bnRyaWVzIGZvciBnZXR0aW5nIGNlbnRyb2lkICAvcmdlb3MKY3YgPC0gY3ZbIWN2JENvdW50cnk9PXN0cl9zdWJzZXQoY3YkQ291bnRyeSwiY29udmV5YW5jZSBKYXBhbiIpLF0gIyByZW1vdmUgamFwYW4gZHVwbGljYXRlCmN2W3N0cl93aGljaChjdiRDb3VudHJ5LCJNYWNlZCIpLCJDb3VudHJ5Il0gPC0gZmluZF9sb25sYXQoIk1hY2VkIikkQ291bnRyeSAKY3Zbc3RyX3doaWNoKGN2JENvdW50cnksIlNlciIpLCJDb3VudHJ5Il0gPC0gZmluZF9sb25sYXQoIlNlcmIiKSRDb3VudHJ5IApjdltzdHJfd2hpY2goY3YkQ291bnRyeSwiSG9seSIpLCJDb3VudHJ5Il0gPC0gZmluZF9sb25sYXQoIlZhdGljIikkQ291bnRyeSAgCmN2W3N0cl93aGljaChjdiRDb3VudHJ5LCJCcnVuIiksIkNvdW50cnkiXSA8LSBmaW5kX2xvbmxhdCgiQnJ1biIpJENvdW50cnkgCmN2W3N0cl93aGljaChjdiRDb3VudHJ5LCJFc3dhIiksIkNvdW50cnkiXSA8LSBmaW5kX2xvbmxhdCgiU3dhemkiKSRDb3VudHJ5CmN2W3N0cl93aGljaChjdiRDb3VudHJ5LCJJdm8iKSwiQ291bnRyeSJdIDwtIGZpbmRfbG9ubGF0KCJJdm8iKSRDb3VudHJ5IApjdltzdHJfd2hpY2goY3YkQ291bnRyeSwiQmFoYSIpLCJDb3VudHJ5Il0gPC0gZmluZF9sb25sYXQoIkJhaGEiKSRDb3VudHJ5CmN2W3N0cl93aGljaChjdiRDb3VudHJ5LCJUaW1vciIpLCJDb3VudHJ5Il0gPC0gZmluZF9sb25sYXQoIlRpbW9yIikkQ291bnRyeQpjdltzdHJfd2hpY2goY3YkQ291bnRyeSwiVHVya3MiKSwiQ291bnRyeSJdIDwtIGZpbmRfbG9ubGF0KCJUdXJrcyIpJENvdW50cnkKY3Zbc3RyX3doaWNoKGN2JENvdW50cnksIkN1cmEiKSwiQ291bnRyeSJdIDwtIGZpbmRfbG9ubGF0KCJDdXJhYyIpJENvdW50cnkKY3Zbc3RyX3doaWNoKGN2JENvdW50cnksIkZhbGtsYW5kIiksIkNvdW50cnkiXSA8LSBmaW5kX2xvbmxhdCgiRmFsayIpJENvdW50cnkKY3Zbc3RyX3doaWNoKGN2JENvdW50cnksIkN6ZWNoIiksIkNvdW50cnkiXSA8LSBmaW5kX2xvbmxhdCgiQ3plY2giKSRDb3VudHJ5CiMgcmVwZWF0ZWQgZ2VvY29kZXMKY3Zbc3RyX3doaWNoKGN2JENvdW50cnksIlBhbGVzIiksIkNvdW50cnkiXSA8LSAiUGFsZXN0aW5lKiAoYXMgbmVpdGhlciByZWNvZ25pdGlvbiBub3IgcHJlanVkaWNlIHRvd2FyZHMgdGhlIFN0YXRlKSIKY3Zbc3RyX3doaWNoKGN2JENvdW50cnksIkNvbmdvIiksIkNvdW50cnkiXVsxXSA8LSBmaW5kX2xvbmxhdCgiQ29uZ28iKSRDb3VudHJ5WzJdCmN2W3N0cl93aGljaChjdiRDb3VudHJ5LCJEZW1vY3JhdGljIiksIkNvdW50cnkiXSA8LSBmaW5kX2xvbmxhdCgiQ29uZ28iKSRDb3VudHJ5WzFdCgpgYGAKCgojIyMjIyBSYW5rIGRhdGEgICAKUmFuayBkYXRhIHZhcmlhYmxlcyB0byBsYXllciBtYXAgcG9pbnRzIGFuZCByZW1vdmUgb3ZlcmxhcHBpbmcgZXJyb3JzICAgIApgYGB7cn0KIyByYW5rIGRhdGEKY3YgPC0gY3YgJT4lIGFycmFuZ2UoZGVzYyhDYXNlcykpICMgcmFuayBkYXRhIGluIGRlc2NlbmRpbmcgb3JkZXIgdG8gbGF5ZXIgbWFwIHBvaW50cyAKIyBnZXQgZ2xvYmFsIGNhc2UgYW5kIGRlYXRoIHJhbmtpbmdzIApjdiA8LSBjdiAlPiUgbXV0YXRlKENhc2VzX3JhbmtlZCA9IChDYXNlcyAlPiUgZGVuc2VfcmFuayAlPiUgbWF4ICsgMSkgLSAoQ2FzZXMgJT4lIGRlbnNlX3JhbmspLAogICAgICAgICAgICAgIERlYXRoc19yYW5rZWQgPSAoRGVhdGhzICU+JSBkZW5zZV9yYW5rICU+JSBtYXggKyAxKSAtIChEZWF0aHMgJT4lIGRlbnNlX3JhbmspLAogICAgICAgICAgICAgIENhc2VzXzE1ZGF5c19yYW5rZWQgPSAoQ2FzZXNfbGFzdF8xNV9kYXlzICU+JSAgZGVuc2VfcmFuayAlPiUgbWF4ICsgMSkgLSAoQ2FzZXNfbGFzdF8xNV9kYXlzICU+JSBkZW5zZV9yYW5rKQogICAgICAgICAgICAgICkgCgpgYGAKCgojIyMjIyBDcmVhdGUgaW5wdXQgdmFyaWFibGVzICAKQ3JlYXRlIGlucHV0IHZhcmlhYmxlcyB1c2VkIGZvciBkZWZpbmluZyBkYXRhIHZpeiBlbGVtZW50cyBpbiB0aGUgbWFwICAgICAgCmBgYHtyfQojIGNyZWF0ZSB2YXJzCmN2X2NvdW50cnkgPC0gY3YkQ291bnRyeQpjdl9jYXNlcyA8LSBjdiRDYXNlcyAlPiUgYXMubnVtZXJpYygpCmN2X2RlYXRocyA8LSBjdiREZWF0aHMgJT4lIGFzLm51bWVyaWMoKQpjdl90b3RhbF9jYXNlcyA8LSBjdl90b3RhbCRUb3RhbF9jYXNlcwpjdl90b3RhbF9kZWF0aHMgPC0gY3ZfdG90YWwkVG90YWxfZGVhdGhzCmN2X3RvdGFsX3JlY2VudF9jYXNlcyA8LSBjdl90b3RhbCRUb3RhbF9yZWNlbnRfY2FzZXMKY3ZfcmVjZW50X2Nhc2VzIDwtIGN2JENhc2VzX2xhc3RfMTVfZGF5cyAlPiUgYXMubnVtZXJpYygpCmN2X2Nhc2VzX3JhbmtlZCA8LSBjdiRDYXNlc19yYW5rZWQgJT4lIGFzLm51bWVyaWMoKQpjdl9kZWF0aHNfcmFua2VkIDwtIGN2JERlYXRoc19yYW5rZWQgJT4lIGFzLm51bWVyaWMoKQpjdl9jYXNlc18xNWRheXNfcmFua2VkIDwtIGN2JENhc2VzXzE1ZGF5c19yYW5rZWQgJT4lIGFzLm51bWVyaWMoKQpgYGAKCgojIyMjIyBFcnJvciBjaGVja2luZyAgICAKKiBSdW4gZmluYWwgZ2VvY29kZSBjaGVjayBvbiBjb3VudHJ5IGdlb2xvY2F0aW9ucyB0byBoaWdobGlnaHQgYW55IGVycm9ycyBhbmQgdHJvdWJsZXNob290LiAgICAKKiBDaGVjayBhbmQgZGlzcGxhY2UgYW55IGdlb2xvY2F0aW9ucyB0aGF0IG92ZXJsYXAgKGNvc21ldGljKSAgICAgIApgYGB7cn0KCiMgbWF0Y2ggY3YgY291bnRyeSBsb25sYXQgdG8gbG9ubGF0IHJnZW9zIGRhdGFiYXNlCmxvbmxhdF9maW5hbCA8LSBsb25sYXRbY3ZfY291bnRyeSxdIApsb25sYXRfZmluYWwgICU+JSAgICMgd3JpdGUgdG8gZGlyCiAgcmVhZHI6OndyaXRlX2NzdihoZXJlOjpoZXJlKCJkYXRhIiwiY3ZfbG9ubGF0LmNzdiIpKQpjdlssYygiTG9uIiwiTGF0IildIDwtIGxvbmxhdF9maW5hbFssYygiTG9uIiwiTGF0IildICMgYWRkIGxvbmxhdCB0byBkZgoKIyBjaGVjayBjb3VudHJ5IG5hbWUgd2l0aCBsYXRsb24KaWYoYW55KGxvbmxhdF9maW5hbCRDb3VudHJ5ID09IGN2JENvdW50cnkpIT1UUlVFKXsKICBjYXQoIlxuXG5cbkNoZWNrIGNvdW50cnkgbG9ubGF0IGJlZm9yZSBwbG90dGluZ1xuXG5cbiIscmVwKCIqIiwxMCkpfQoKIyBmaXggbWlzYyBsYXRsb24KbnVkZ2UgPC0gMC41ICMgbnVkZ2Ugb3ZlcmxhcHBpbmcgbGF0bG9uCmN2W2N2JENvdW50cnk9PSJNYWxheXNpYSIsYygiTG9uIiwiTGF0IildIDwtIGMoMTAxLjk3NTc2OSw0LjIxMDQ4NCkgIyBtYWxheXNpYQpjdltjdiRDb3VudHJ5PT1jdltzdHJfd2hpY2goY3YkQ291bnRyeSwiUGFsZXMiKSwiQ291bnRyeSJdLGMoIkxvbiIsIkxhdCIpXSA8LSBjdiAlPiUgZmlsdGVyKENvdW50cnk9PSJJc3JhZWwiKSAlPiUgZHBseXI6OnNlbGVjdChjKCJMb24iLCJMYXQiKSkgKyBudWRnZSAjIGRpc3BsYWNlIFBhbGVzdGluZSBsYXRsb24gZnJvbSBpc3JhZWwKY3ZbY3YkQ291bnRyeT09Y3Zbc3RyX3doaWNoKGN2JENvdW50cnksIkdpYnJhbCIpLCJDb3VudHJ5Il0sYygiTG9uIiwiTGF0IildIDwtIGN2ICU+JSBmaWx0ZXIoQ291bnRyeT09IlNwYWluIikgJT4lIGRwbHlyOjpzZWxlY3QoYygiTG9uIiwiTGF0IikpICsgbnVkZ2UgIyBkaXNwbGFjZSBnaWJyYWx0YXIgbGF0bG9uIGZyb20gc3BhaW4KY3ZbY3YkQ291bnRyeT09Y3Zbc3RyX3doaWNoKGN2JENvdW50cnksIkJvbmFpIiksIkNvdW50cnkiXSxjKCJMb24iLCJMYXQiKV0gPC0gbG9ubGF0ICU+JSBmaWx0ZXIoQ291bnRyeT09IkN1cmFjYW8iKSAlPiUgZHBseXI6OnNlbGVjdChjKCJMb24iLCJMYXQiKSkgKyBudWRnZSAtIDAuMyAgIyBkaXNwbGFjZSBkdXRjaCBjYXJpYmJlYW4yIGxhdGxvbiBmcm9tIGN1cmFjYW8KY3YgPC0gY3ZbY29tcGxldGUuY2FzZXMoY3YpLF0gIyBybSBmaW5hbCBlbXB0eSByb3cKCiMgZ2V0IGZpbmFsIGxhdGxvbiBtYXRyaXggIApsb24gPC0gY3YkTG9uIDsgbGF0IDwtIGN2JExhdCAKbG9ubGF0X21hdHJpeCA8LSBtYXRyaXgoYyhsb24sbGF0KSwgbmNvbCA9IDIpICMgZ2V0IG1hdHJpeCBmb3IgYXJjIGxpbmVzICAKYGBgCgpDaGVjayBmb3IgTkFzIGFuZCBhbm9tYWxpZXMgaW4gbmV3bHkgc2NyYXBlZCBkYXRhICAgICAgCmBgYHtyfQojIGNoZWNrIE5BcwppZihhbnkoaXMubmEoY3YkTGF0KSk9PVRSVUUpewogIGNhdCgiXG5cblxuTGF0bG9uIGluIGN2IGRhdGFzZXQgY29udGFpbnMgTkFzXG4iLHJlcCgiKiIsMTApLCJcbiIpCiAgY3Zbd2hpY2goaXMubmEoY3YkTGF0KSksIkNvdW50cnkiXQp9CgojIGZpbmQgd2hpY2ggY291bnRyaWVzIHNob3cgTkFzL2Fub21hbGllcyBmcm9tIGxhdGxvbiBkYXRhYmFzZSAgCmZpbmRfbG9ubGF0KCI8aW5zZXJ0IGNvdW50cnkgc3RyaW5nPiIpCiMgZ2V0IGN1cnJlbnQgY291bnRyeSBuYW1lIGluIGN2IGZvciByZXBsYWNlbWVudCAgIApzZXRfY291bnRyeV9uYW1lKCI8aW5zZXJ0IGNvdW50cnkgc3RyaW5nPiIpIApgYGAKCioqKioqKiAgCgojIyMgRmVhdHVyZXMgICAgICAgCiMjIyMjIFN0eWxlICAgICAgIApEZWZpbmUgc3R5bGUgZWxlbWVudHMgZm9yIG1hcCAgICAgCmBgYHtyfQojIHN0eWxlIC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KY3VzdG9tX3RpbGUgPC0gbmFtZXMocHJvdmlkZXJzKVsxMTNdICMgY2hvb3NlIHRpbGVzCmNvbHYgPC0gIiNGOTBGNDAiICMgY2FzZXMKY29sdjIgPC0gIiNGQTAzMDMiICMgZGVhdGhzCmNvbHYzIDwtICIjREE3NDBEIiAjIHJlY2VudCBjYXNlcyAKb3BhYyA8LSAwLjcKY29sdmVjX2Nhc2VzIDwtIGlmZWxzZShjdl9jYXNlcyA+IDAsIGNvbHYsTmFOKSAjIGdldCBjb2x2ZWMgdy9vIG5hZnRhIGNhc2VzCmNvbHZlY19kZWF0aHMgPC0gaWZlbHNlKGN2X2RlYXRocyA+IDAgLGNvbHYyLE5hTikgIyByZW1vdmUgMCBwb2ludHMKY29sdmVjX3JlY2VudF9jYXNlcyA8LSBpZmVsc2UoY3ZfcmVjZW50X2Nhc2VzID4gMCwgY29sdjMsTmFOKSAjIHJlbW92ZSAwIHBvaW50cwpgYGAKCiMjIyMjIFRleHQgICAgCkNyZWF0ZSB0ZXh0IGVsZW1lbnRzIGZvciBtYXAgICAgCgoqIFRpdGxlICAgIAoqIExheWVyIGxhYmVscyAoY29udHJvbCBib3gpICAgIAoqIENyZWRpdHMgIAoqIEhvdmVyIGxhYmVscyBmb3IgZGF0YSBwb2ludHMgKGNhc2VzLCBkZWF0aHMsIGFuZCByZWNlbnQgY2FzZXMpICAKKiBQb3B1cCBsYWJlbHMgZm9yIGRhdGEgcG9pbnRzIChjYXNlcywgZGVhdGhzLCBhbmQgcmVjZW50IGNhc2VzKSAgICAgIApgYGB7cn0KCiMgdGV4dCAtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQojIHRpdGxlIAp0dGwgPC0gcGFzdGUwKCI8ZGl2IHN0eWxlPVwiY29sb3I6I0Y5MEY0MDtcIj4gCiAgICAgICAgICAgICAgQ09WSUQxOSAKICAgICAgICAgICAgICA8L2Rpdj4iLCJnbG9iYWwgZGlzdHJpYnV0aW9uIikKCiMgdHIKaGVhZGluZ190ciA8LSBwYXN0ZSgKICAgICAgICAgICAgICAgICAgICAiPHN0cm9uZz4gVG90YWwgY2FzZXMgPGRpdiBzdHlsZT1cImNvbG9yOiNGOTBGNDA7IGZvbnQtc2l6ZToxNTAlXCI+Iixmb3JtYXQoY3ZfdG90YWxfY2FzZXMsYmlnLm1hcms9IiwiLHNjaWVudGlmaWMgPSBGLHRyaW0gPSBUKSwiPC9kaXY+IDwvc3Ryb25nPiIsICI8YnIvPiIsCiAgICAgICAgICAgICAgICAgICAgIjxzdHJvbmc+IFRvdGFsIGRlYXRocyA8ZGl2IHN0eWxlPVwiY29sb3I6I0ZBMDMwMzsgZm9udC1zaXplOjE1MCVcIj4iLGZvcm1hdChjdl90b3RhbF9kZWF0aHMsYmlnLm1hcmsgPSAiLCIsc2NpZW50aWZpYyA9IEYsdHJpbSA9IFQpLCI8L2Rpdj4gPC9zdHJvbmc+IiwiPGJyLz4iLAogICAgICAgICAgICAgICAgICAgICI8c3Ryb25nPiBUb3RhbCBjYXNlcyBpbiBsYXN0IDE1IGRheXMgPGRpdiBzdHlsZT1cImNvbG9yOiNEQTc0MEQ7IGZvbnQtc2l6ZToxNTAlXCI+Iixmb3JtYXQoY3ZfdG90YWxfcmVjZW50X2Nhc2VzLGJpZy5tYXJrID0gIiwiLHNjaWVudGlmaWMgPSBGLHRyaW0gPSBUKSwiPC9kaXY+IDwvc3Ryb25nPiIKICAgICAgICAgICAgICAgICAgICApCgojIGJsCmhlYWRpbmdfYmwgPC0gcGFzdGUwKAogICAgICAgICAgICAgICAgICAgICJEYXRhIHNvdXJjZTogPGEgc3R5bGU9Y29sb3I6Iixjb2x2LCI7IGhyZWY9aHR0cHM6Ly93d3cuZWNkYy5ldXJvcGEuZXUvZW4vZ2VvZ3JhcGhpY2FsLWRpc3RyaWJ1dGlvbi0yMDE5LW5jb3YtY2FzZXM+RUNEQzwvYT48YnI+CiAgICAgICAgICAgICAgICAgICAgTGFzdCBkYXRhIHNjcmFwZTogIiwgU3lzLnRpbWUoKSwiPGJyPgogICAgICAgICAgICAgICAgICAgIERlc2lnbmVyOiA8YSBzdHlsZT1jb2xvcjoiLGNvbHYsIjsgaHJlZj1odHRwczovL2RhcndpbmFuZGRhdmlzLmdpdGh1Yi5pby9EYXRhUG9ydGZvbGlvLz4gTWF0dCBNYWxpc2hldiA8L2E+PGJyPgogICAgICAgICAgICAgICAgICAgIFR3aXR0ZXIvR2l0aHViOiA8YSBzdHlsZT1jb2xvcjoiLGNvbHYsIjsgaHJlZj1odHRwczovL2dpdGh1Yi5jb20vZGFyd2luYW5kZGF2aXMvd29ybGRtYXBzL3RyZWUvZ2gtcGFnZXM+IEBkYXJ3aW5hbmRkYXZpcyA8L2E+PGJyPgogICAgICAgICAgICAgICAgICAgIFNwb3QgYW4gZXJyb3I/IDxhIHN0eWxlPWNvbG9yOiIsY29sdiwiOyBocmVmPWh0dHBzOi8vZ2l0aHViLmNvbS9kYXJ3aW5hbmRkYXZpcy93b3JsZG1hcHMvaXNzdWVzPiBTdWJtaXQgYW4gaXNzdWUgPC9hPiIKICAgICAgICAgICAgICAgICAgICApCgojIGxhYmVscyAjIyBub3QgcnVuIApsYWJlbF9jYXNlcyA8LSBwYXN0ZSgKICAiPHN0cm9uZz4gQ29udGluZW50OiA8L3N0cm9uZz4iLCBjdiRDb250aW5lbnQsICI8YnIvPiAiCikgJT4lIG1hcChodG1sdG9vbHM6OkhUTUwpCgojIHBvcHVwcwpwb3B1cF9jYXNlcyA8LSBwYXN0ZTAoCiAgIjxzdHJvbmc+Iixjdl9jb3VudHJ5LCI8L3N0cm9uZz48YnIvPjxici8+IiwKICAiPHN0cm9uZz4gQ2FzZXMgPC9zdHJvbmc+PGJyLz48c3BhbiBzdHlsZT1jb2xvcjoiLGNvbHYsIjs+IiwgY3ZfY2FzZXMgJT4lIGZvcm1hdChiaWcubWFyaz0iLCIsc2NpZW50aWZpYyA9IEYsdHJpbSA9IFQpLCI8L3NwYW4+PGJyLz4iLAogICI8c3Ryb25nPiBHbG9iYWwgY2FzZXMgcmFua2luZyA8L3N0cm9uZz4iLCI8YnIvPiIsIGN2X2Nhc2VzX3JhbmtlZCAlPiUgZm9ybWF0KGJpZy5tYXJrPSIsIixzY2llbnRpZmljID0gRix0cmltID0gVCksIi8iLGN2X2Nhc2VzX3JhbmtlZCAlPiUgbWF4LCI8YnIvPiIKKSAlPiUgbWFwKGh0bWx0b29sczo6SFRNTCkKCnBvcHVwX2RlYXRocyA8LSBwYXN0ZTAoCiAgIjxzdHJvbmc+Iixjdl9jb3VudHJ5LCI8L3N0cm9uZz48YnIvPjxici8+IiwKICAiPHN0cm9uZz4gRGVhdGhzIDwvc3Ryb25nPjxici8+PHNwYW4gc3R5bGU9Y29sb3I6Iixjb2x2MiwiOz4iLCBjdl9kZWF0aHMgJT4lIGZvcm1hdChiaWcubWFyaz0iLCIsc2NpZW50aWZpYyA9IEYsdHJpbSA9IFQpLCI8L3NwYW4+PGJyLz4iLAogICI8c3Ryb25nPiBHbG9iYWwgZGVhdGggcmFua2luZyA8L3N0cm9uZz4iLCI8YnIvPiIsIGN2X2RlYXRoc19yYW5rZWQgJT4lIGZvcm1hdChiaWcubWFyaz0iLCIsc2NpZW50aWZpYyA9IEYsdHJpbSA9IFQpLCIvIixjdl9kZWF0aHNfcmFua2VkICU+JSBtYXgKKSAlPiUgbWFwKGh0bWx0b29sczo6SFRNTCkKCnBvcHVwX3JlY2VudF9jYXNlcyA8LSBwYXN0ZTAoCiAgIjxzdHJvbmc+Iixjdl9jb3VudHJ5LCI8L3N0cm9uZz48YnIvPjxici8+IiwKICAiPHN0cm9uZz4gQ2FzZXMgaW4gbGFzdCAxNSBkYXlzIDwvc3Ryb25nPjxici8+PHNwYW4gc3R5bGU9Y29sb3I6Iixjb2x2MywiOz4iLCBjdl9yZWNlbnRfY2FzZXMgJT4lIGZvcm1hdChiaWcubWFyaz0iLCIsc2NpZW50aWZpYyA9IEYsdHJpbSA9IFQpLCI8L3NwYW4+PGJyLz4iLAogICI8c3Ryb25nPiBHbG9iYWwgcmVjZW50IGNhc2VzIHJhbmtpbmcgPC9zdHJvbmc+IiwiPGJyLz4iLCBjdl9jYXNlc18xNWRheXNfcmFua2VkLCAiLyIsY3ZfY2FzZXNfMTVkYXlzX3JhbmtlZCAlPiUgbWF4CikgJT4lIG1hcChodG1sdG9vbHM6OkhUTUwpCgpgYGAKCkRlZmluZSBDU1MgZWxlbWVudHMgZm9yIHdlYnBhZ2Ugb3V0cHV0ICAgICAgICAgICAgCmBgYHtyfQojIHN0eWxlIG9wdGlvbnMgLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KIyBjc3MKIyB0aXRsZSAKbWFwX3RpdGxlIDwtIHRhZ3Mkc3R5bGUoIAogIEhUTUwoIi5sZWFmbGV0LWNvbnRyb2wubWFwLXRpdGxlIHsgCiAgICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZSgtNTAlLC0yMCUpOwogICAgICAgcG9zaXRpb246IGZpeGVkICFpbXBvcnRhbnQ7CiAgICAgICBsZWZ0OiA1MCU7CiAgICAgICB0ZXh0LWFsaWduOiBjZW50ZXI7CiAgICAgICBwYWRkaW5nLWxlZnQ6IDEwcHg7IAogICAgICAgcGFkZGluZy1yaWdodDogMTBweDsgCiAgICAgICBiYWNrZ3JvdW5kOiB3aGl0ZTsgb3BhY2l0eTogMC41OwogICAgICAgZm9udC1zaXplOiA0MHB4OwogICAgICAgZm9udC1mYW1pbHk6IE9wdGltYTsKICAgICAgIH0iCiAgICAgICApKQoKdGl0bGUgPC0gdGFncyRkaXYoCiAgbWFwX3RpdGxlLCBIVE1MKHR0bCkKKSAgCgojIGNvbnRyb2wgYm94Cm1hcF9jb250cm9sX2JveCA8LSB0YWdzJHN0eWxlKCAKICBIVE1MKCIubGVhZmxldC1jb250cm9sLmxheWVycy1iYXNlIHsgCiAgICAgICB0ZXh0LWFsaWduOiBsZWZ0OwogICAgICAgcGFkZGluZy1sZWZ0OiAxMHB4OyAKICAgICAgIHBhZGRpbmctcmlnaHQ6IDEwcHg7IAogICAgICAgYmFja2dyb3VuZDogd2hpdGU7IG9wYWNpdHk6IDE7CiAgICAgICBmb250LXNpemU6IDE1cHg7CiAgICAgICB9IgogICAgICAgKSkKCmNvbnRyb2xfYm94IDwtIHRhZ3MkZGl2KAogIG1hcF9jb250cm9sX2JveCwgSFRNTCgiIikKKSAgCgojIHRleHQgbGFiZWxzIApzdHlsZSA8LSBsaXN0KAogICJjb2xvciIgPSAiYmxhY2siLAogICJmb250LXdlaWdodCIgPSAibm9ybWFsIiwKICAiZm9udC1mYW1pbHkiID0gIk9wdGltYSIsCiAgInBhZGRpbmciID0gIjhweCIKKQoKc3R5bGVfbmFmdGEgPC0gbGlzdCgKICAiY29sb3IiID0gIiNGOTBGNDAiLAogICJmb250LXdlaWdodCIgPSAibm9ybWFsIiwKICAiZm9udC1mYW1pbHkiID0gIk9wdGltYSIsCiAgInBhZGRpbmciID0gIjhweCIKKQoKIyB0ZXh0IGxhYmVsIG9wdGlvbnMgCnRleHRfbGFiZWxfb3B0IDwtIGxhYmVsT3B0aW9ucyhub0hpZGUgPSBGLCBkaXJlY3Rpb24gPSAidG9wIiwgdGV4dHNpemUgPSAiMTVweCIsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB0ZXh0T25seSA9IEYsIG9wYWNpdHkgPSAwLjcsIG9mZnNldCA9IGMoMCwwKSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHN0eWxlID0gc3R5bGUsIHBlcm1hbmVudCA9IFQKKQoKdGV4dF9sYWJlbF9vcHRfbmFmdGEgPC0gbGFiZWxPcHRpb25zKG5vSGlkZSA9IFQsIGRpcmVjdGlvbiA9ICJ0b3AiLCB0ZXh0c2l6ZSA9ICIxNXB4IiwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHRleHRPbmx5ID0gRiwgb3BhY2l0eSA9IDAuNywgb2Zmc2V0ID0gYygwLDApLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgc3R5bGUgPSBzdHlsZV9uYWZ0YSwgcGVybWFuZW50ID0gVAopCgojIGxheWVyIG9wdGlvbnMgCmxheWVyX29wdGlvbnMgPC0gbGF5ZXJzQ29udHJvbE9wdGlvbnMoY29sbGFwc2VkID0gRikKCmBgYAoKRGVmaW5lIG1hcCB0aWxlc2V0IG9wdGlvbnMgICAgICAgIApgYGB7cn0KIyB0aWxlIG9wdGlvbnMKbWluX3pvb20gPC0gMwptYXhfem9vbSA8LSAxMAoKIyBzZXQgbWF4IG1hcCBib3VuZHMKbGF0bG9uX29yaWdpbiA8LSBjdiAlPiUgZmlsdGVyKENvdW50cnk9PSJDaGluYSIpICU+JSBkcGx5cjo6c2VsZWN0KGMoIkxvbiIsIkxhdCIpKSAlPiUgYXMubnVtZXJpYygpICMgY2hpbmEgbG9ubGF0Cm1heF9ib3VuZDEgPC0gYygtMTUwLDkwKQptYXhfYm91bmQyIDwtIGMoMTgwLC05MCkKCiMgc2V0IG1hcCBwcm9qZWN0aW9ucyAKcHJval9vcHRpb25zIDwtIGxlYWZsZXRPcHRpb25zKHdvcmxkQ29weUp1bXAgPSBUKQpgYGAKCkRlZmluZSBtYXAgdGlsZXNldCBsYXllcnMgYW5kIGF0dHJpYnV0ZXMgICAgICAKYGBge3J9CiMgbGF5ZXJzIC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQoKIyB0aXRsZXMKbGF5ZXIxIDwtICJDYXNlcyIKbGF5ZXIyIDwtICJEZWF0aHMiCmxheWVyMyA8LSAiQ2FzZXMgaW4gbGFzdCAxNSBkYXlzIiAgCgojIHBvaW50IHNpemUKY2V4IDwtIDcwCnJhZGl1c19jYXNlcyA8LSAoc3FydChjdl9jYXNlcykgLyBjZXgpIApyYWRpdXNfZGVhdGhzIDwtIChzcXJ0KGN2X2RlYXRocykgLyBjZXgpCnJhZGl1c19yZWNlbnRfY2FzZXMgPC0gKHNxcnQoY3ZfcmVjZW50X2Nhc2VzKSAvIGNleCkKCiMgZWFzeSBidXR0b25zIApsb2NhdGVfbWUgPC0gZWFzeUJ1dHRvbiggIyBsb2NhdGUgdXNlcgogIGljb249ImZhLWNyb3NzaGFpcnMiLCB0aXRsZT0iWm9vbSB0byBteSBwb3NpdGlvbiIsCiAgb25DbGljaz1KUygiZnVuY3Rpb24oYnRuLCBtYXApeyBtYXAubG9jYXRlKHtzZXRWaWV3OiB0cnVlfSk7IH0iKSkKCnJlc2V0X3pvb20gPC0gZWFzeUJ1dHRvbiggIyByZXNldCB6b29tIAogIGljb249ImZhLWdsb2JlIiwgdGl0bGU9IlJlc2V0IHpvb20iLAogIG9uQ2xpY2s9SlMoImZ1bmN0aW9uKGJ0biwgbWFwKXsgbWFwLnNldFpvb20oMyk7fSIpKSAKCmBgYAoKKioqKioqICAKCiMjIyBNYXAgICAgICAgIApCdWlsZCBmaW5hbCBtYXAgICAgCmBgYHtyfQojIG1hcCAtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KCiMgc2V0IGFyYyBtYXRyaXgKbSA8LSBnY0ludGVybWVkaWF0ZShsYXRsb25fb3JpZ2luLAogICAgICAgICAgICAgICBsb25sYXRfbWF0cml4LAogICAgICAgICAgICAgICBuPTEwMCwKICAgICAgICAgICAgICAgYWRkU3RhcnRFbmQ9VCwKICAgICAgICAgICAgICAgYnJlYWtBdERhdGVMaW5lID0gVCwKICAgICAgICAgICAgICAgc3A9VCkgJT4lIAogIGxlYWZsZXQob3B0aW9ucz1wcm9qX29wdGlvbnMpICU+JSAjIGFkZCB3b3JsZCBqdW1wIAogIHNldFZpZXcobGF0bG9uX29yaWdpblsxXSxsYXRsb25fb3JpZ2luWzJdLHpvb209bWluX3pvb20pICU+JSAKICBhZGRUaWxlcyhjdXN0b21fdGlsZSwKICAgICAgICAgICBvcHRpb25zID0gcHJvdmlkZXJUaWxlT3B0aW9ucyhtaW5ab29tPW1pbl96b29tLCBtYXhab29tPW1heF96b29tKSAjIHNldCB6b29tIGJvdW5kcwogICAgICAgICAgICkgJT4lIAogIGFkZFByb3ZpZGVyVGlsZXMoY3VzdG9tX3RpbGUsIAogICAgICAgICAgICAgICAgICAgZ3JvdXAgPSBjKGxheWVyMSxsYXllcjIsbGF5ZXIzKSwKICAgICAgICAgICAgICAgICAgIG9wdGlvbnMgPSBwcm92aWRlclRpbGVPcHRpb25zKG1pblpvb209bWluX3pvb20sIG1heFpvb209bWF4X3pvb20pICMgc2V0IHpvb20gYm91bmRzCiAgICAgICAgICAgICAgICAgICApICU+JSAKICBhZGRQb2x5bGluZXMoY29sb3I9Y29sdmVjX2RlYXRocywgIyBkZWF0aHMKICAgICAgICAgICAgICAgb3BhY2l0eSA9IG9wYWMsCiAgICAgICAgICAgICAgIHdlaWdodCA9IDAuMywKICAgICAgICAgICAgICAgZ3JvdXAgPSBsYXllcjIpICU+JQogIGFkZENpcmNsZU1hcmtlcnMobG9uLGxhdCwgIyBjYXNlcwogICAgICAgICAgICAgd2VpZ2h0PTEsCiAgICAgICAgICAgICByYWRpdXM9IHJhZGl1c19jYXNlcywKICAgICAgICAgICAgIGNvbG9yPWNvbHYsCiAgICAgICAgICAgICBmaWxsQ29sb3I9Y29sdiwKICAgICAgICAgICAgIGxhYmVsID0gcG9wdXBfY2FzZXMsCiAgICAgICAgICAgICBwb3B1cCA9IHBvcHVwX2Nhc2VzLAogICAgICAgICAgICAgbGFiZWxPcHRpb25zID0gdGV4dF9sYWJlbF9vcHQsCiAgICAgICAgICAgICBwb3B1cE9wdGlvbnMgPSB0ZXh0X2xhYmVsX29wdCwKICAgICAgICAgICAgIGdyb3VwID0gbGF5ZXIxKSAlPiUgCiAgYWRkQ2lyY2xlTWFya2Vycyhsb24sbGF0LCAjIGRlYXRocyAKICAgICAgICAgICAgIHdlaWdodD0xLAogICAgICAgICAgICAgcmFkaXVzPXJhZGl1c19kZWF0aHMsCiAgICAgICAgICAgICBjb2xvcj1jb2x2ZWNfZGVhdGhzLAogICAgICAgICAgICAgZmlsbENvbG9yPWNvbHZlY19kZWF0aHMsCiAgICAgICAgICAgICBsYWJlbCA9IHBvcHVwX2RlYXRocywgIAogICAgICAgICAgICAgcG9wdXAgPSBwb3B1cF9kZWF0aHMsCiAgICAgICAgICAgICBsYWJlbE9wdGlvbnMgPSB0ZXh0X2xhYmVsX29wdCwKICAgICAgICAgICAgIHBvcHVwT3B0aW9ucyA9IHRleHRfbGFiZWxfb3B0LAogICAgICAgICAgICAgZ3JvdXAgPSBsYXllcjIpICU+JQogIGFkZENpcmNsZU1hcmtlcnMobG9uLGxhdCwgIyByZWNlbnQgY2FzZXMgCiAgICAgICAgICAgICB3ZWlnaHQ9MSwKICAgICAgICAgICAgIHJhZGl1cz1yYWRpdXNfcmVjZW50X2Nhc2VzLAogICAgICAgICAgICAgY29sb3I9Y29sdmVjX3JlY2VudF9jYXNlcywKICAgICAgICAgICAgIGZpbGxDb2xvcj1jb2x2ZWNfcmVjZW50X2Nhc2VzLAogICAgICAgICAgICAgbGFiZWwgPSBwb3B1cF9yZWNlbnRfY2FzZXMsCiAgICAgICAgICAgICBwb3B1cCA9IHBvcHVwX3JlY2VudF9jYXNlcywKICAgICAgICAgICAgIGxhYmVsT3B0aW9ucyA9IHRleHRfbGFiZWxfb3B0LCAKICAgICAgICAgICAgIHBvcHVwT3B0aW9ucyA9IHRleHRfbGFiZWxfb3B0LAogICAgICAgICAgICAgZ3JvdXAgPSBsYXllcjMpICU+JQogIGFkZExheWVyc0NvbnRyb2woCiAgICBiYXNlR3JvdXBzID0gYyhsYXllcjEsbGF5ZXIyLGxheWVyMyksCiAgICBvcHRpb25zID0gbGF5ZXJfb3B0aW9ucykgJT4lIAogIGhpZGVHcm91cChjKGxheWVyMixsYXllcjMpKSAlPiUgCiAgYWRkQ29udHJvbCh0aXRsZSwgImJvdHRvbWxlZnQiLCBjbGFzc05hbWUgPSAibWFwLXRpdGxlIikgJT4lIAogIGFkZENvbnRyb2woaGVhZGluZ19ibCwiYm90dG9tbGVmdCIpICU+JQogIGFkZENvbnRyb2woaGVhZGluZ190ciwgInRvcHJpZ2h0IikgJT4lIAogIGFkZENvbnRyb2woY29udHJvbF9ib3gsICJ0b3ByaWdodCIsIGNsYXNzTmFtZSA9ICJsYXllcnMtYmFzZSIpICU+JSAKICBhZGRFYXN5QnV0dG9uKHJlc2V0X3pvb20pICU+JSAKICBhZGRFYXN5QnV0dG9uKGxvY2F0ZV9tZSkgCm0KYGBgCgpTYXZlIGZpbmFsIG91dHB1dCB0byBsb2NhbCBkcml2ZSAgIApgYGB7cn0KIyBzYXZlIG91dHB1dHMgCm0gJT4lIHNhdmVXaWRnZXQoaGVyZTo6aGVyZSgiY29yb25hdmlydXMuaHRtbCIpKSAgCmBgYAoKKipFbmQgZG9jdW1lbnQqKiAg</div>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeSourceEmbed("process.Rmd");
+  window.initializeCodeFolding("show" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3,h4,h5",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
