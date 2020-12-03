@@ -23,8 +23,6 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<script src="site_libs/navigation-1.1/codefolding.js"></script>
-<script src="site_libs/navigation-1.1/sourceembed.js"></script>
 
 
 
@@ -53,9 +51,6 @@ h6 {
 }
 .table th:not([align]) {
   text-align: left;
-}
-#rmd-source-code {
-  display: none;
 }
 </style>
 
@@ -236,9 +231,6 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
-<style type="text/css">
-.code-folding-btn { margin-bottom: 4px; }
-</style>
 
 
 
@@ -357,16 +349,6 @@ div.tocify {
 
 <div class="fluid-row" id="header">
 
-<div class="btn-group pull-right">
-<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu" style="min-width: 50px;">
-<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
-<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
-<li role="separator" class="divider"></li>
-<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
-</ul>
-</div>
-
 
 
 <h1 class="title toc-ignore">Data</h1>
@@ -386,7 +368,7 @@ div.tocify {
 <!-- begin doc -------------------------------- -->
 
 <hr />
-<p><strong><code>cv_lonlat.csv</code></strong><br />
+<p><code>cv_lonlat.csv</code><br />
 Georeferenced latitude and longitude centroids by country. Generated from <code>ecohealth.R</code>.</p>
 <div id="links" class="section level2">
 <h2>Links</h2>
@@ -394,7 +376,6 @@ Georeferenced latitude and longitude centroids by country. Generated from <code>
 Data from the <a href="https://www.ecdc.europa.eu/en/geographical-distribution-2019-ncov-cases">European Centre for Disease Prevention and Control (ECDC)</a></p>
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiRGF0YSIKYXV0aG9yOiB8CiB8IE1hdHQgTWFsaXNoZXYKIHwgQGRhcndpbmFuZGRhdmlzCmhlYWRlci1pbmNsdWRlczogXHVzZXBhY2thZ2V7ZmxvYXR9CmFsd2F5c19hbGxvd19odG1sOiB5ZXMKcGFyYW1zOiAKICBsZXNzb246ICJJbmRleCIKICBkYXRlOiAhciBTeXMuRGF0ZSgpCiAgc2Vzc2lvbjogIXIgc2Vzc2lvbkluZm8oKSAgCiAgdmVyc2lvbjogIXIgZ2V0UnZlcnNpb24oKQogIGVtYWlsOiBtYXR0aGV3Lm1hbGlzaGV2IFthdF0gZ21haWwuY29tIAogIGdpdGh1YjogaHR0cHM6Ly9naXRodWIuY29tL2RhcndpbmFuZGRhdmlzL2Vjb2hlYWx0aApmb250c2l6ZTogMTAKZ2VvbWV0cnk6IG1hcmdpbj0xaW4KZG9jdW1lbnRjbGFzczogYXJ0aWNsZQpsaW5rY29sb3I6IGJsdWUKdXJsY29sb3I6IGJsdWUKY2l0ZWNvbG9yOiBwaW5rCm91dHB1dDoKICBodG1sX2RvY3VtZW50OgogICAgaGlnaGxpZ2h0OiB0YW5nbwogICAgY29kZV9mb2xkaW5nOiBzaG93CiAgICBjb2RlX2Rvd25sb2FkOiB0cnVlCiAgICB0b2M6IHllcwogICAgdG9jX2RlcHRoOiA1CiAgICBudW1iZXJfc2VjdGlvbnM6IG5vCiAgICB0b2NfZmxvYXQ6IHllcwppbmx1ZGVzOgogIGJlZm9yZV9ib2R5OiBiZWZvcmVfYm9keS50ZXgKc3VidGl0bGU6IAp0YWdzOgotIG5vdGhpbmcKLSBub3RoaW5nbmVzcwpjbGFzc29wdGlvbjogcG9ydHJhaXQKdmlnbmV0dGU6ID4KICAlXFZpZ25ldHRlSW5kZXhFbnRyeXtlY29oZWFsdGh9CiAgJVxWaWduZXR0ZUVuY29kaW5ne1VURi04fQogICVcVmlnbmV0dGVFbmdpbmV7a25pdHI6OnJtYXJrZG93bn0KLS0tCgo8IS0tIC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLSAtLT4KPCEtLSBybWQgc2V0dGluZ3MgLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0gLS0+Cgo8IS0tIGVxdWF0aW9uIHJlbmRlcmluZyAtLT4KPHNjcmlwdCB0eXBlPSJ0ZXh0L3gtbWF0aGpheC1jb25maWciPgogIE1hdGhKYXguSHViLkNvbmZpZyh7IFRlWDogeyBlcXVhdGlvbk51bWJlcnM6IHthdXRvTnVtYmVyOiAiYWxsIn0gfSB9KTsKPC9zY3JpcHQ+CgpgYGB7ciwgc2V0LW9wdGlvbnMsIGVjaG8gPSBGLCBjYWNoZSA9IEZ9Cm9wdGlvbnMod2lkdGg9MTAwKQprbml0cjo6b3B0c19jaHVuayRzZXQoCiBldmFsID0gRiwgIyBydW4gYWxsIGNvZGUKIGVjaG8gPSBULCAjIHNob3cgY29kZQogY29tbWVudCA9ICIiLAogdGlkeS5vcHRzPWxpc3Qod2lkdGguY3V0b2ZmPTEwMCksICMgc2V0IHdpZHRoIG9mIGNvZGUgY2h1bmtzCiB0aWR5ID0gVCwgIyBtYWtlIG91dHB1dCBhcyB0aWR5CiBtZXNzYWdlID0gRiwgICMgbWFzayBhbGwgbWVzc2FnZXMKIHdhcm5pbmcgPSBGLCAjIG1hc2sgYWxsIHdhcm5pbmdzIAogc2l6ZT0ic21hbGwiLCAjIHNldCBjb2RlIGNodW5rIHNpemUKIGtuaXRyOjpvcHRzX2NodW5rJHNldChmaWcucG9zID0gJ0gnKQopCiMgcm1hcmtkb3duOjpyZW5kZXJfc2l0ZSgpICMgcmVuZGVyIGVudGlyZSBzaXRlCmBgYAoKPCEtLSAtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0gLS0+CjwhLS0gYmVnaW4gZG9jIC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tIC0tPgoKXG5ld3BhZ2UgIAoKKioqKioqICAgIAoKKipgY3ZfbG9ubGF0LmNzdmAqKiAgICAKR2VvcmVmZXJlbmNlZCBsYXRpdHVkZSBhbmQgbG9uZ2l0dWRlIGNlbnRyb2lkcyBieSBjb3VudHJ5LiBHZW5lcmF0ZWQgZnJvbSBgZWNvaGVhbHRoLlJgLiAgICAgIAoKIyMgTGlua3MgICAgICAgIAoKW1Byb2plY3QgcGFnZSBvbiBHaXRodWJdKGh0dHBzOi8vZ2l0aHViLmNvbS9kYXJ3aW5hbmRkYXZpcy9lY29oZWFsdGgpICAgCkRhdGEgZnJvbSB0aGUgW0V1cm9wZWFuIENlbnRyZSBmb3IgRGlzZWFzZSBQcmV2ZW50aW9uIGFuZCBDb250cm9sIChFQ0RDKV0oaHR0cHM6Ly93d3cuZWNkYy5ldXJvcGEuZXUvZW4vZ2VvZ3JhcGhpY2FsLWRpc3RyaWJ1dGlvbi0yMDE5LW5jb3YtY2FzZXMpICAgICAgICAgCg==</div>
 
 
 </div>
@@ -430,12 +411,6 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
-<script>
-$(document).ready(function () {
-  window.initializeSourceEmbed("data.Rmd");
-  window.initializeCodeFolding("show" === "show");
-});
-</script>
 
 <script>
 $(document).ready(function ()  {

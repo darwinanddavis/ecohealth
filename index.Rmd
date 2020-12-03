@@ -21,8 +21,8 @@ citecolor: pink
 output:
   html_document:
     highlight: tango
-    code_folding: show
-    code_download: true
+    # code_folding: show
+    # code_download: true
     toc: yes
     toc_depth: 5
     number_sections: no

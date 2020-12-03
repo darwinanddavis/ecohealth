@@ -209,7 +209,7 @@ cv_cases_15days_ranked <- cv$Cases_15days_ranked %>% as.numeric()
 
 
 ##### Error checking    
-* Run final geocode check on country geolocations to highlight any errors and troubleshoot.    
+* Run final geocode check on country geolocations to highlight any errors and troubleshoot       
 * Check and displace any geolocations that overlap (cosmetic)      
 ```{r}
 
