@@ -1,11 +1,11 @@
 <div align="center">
-  <h1 style="color:#F90F40">COVID19 coronavirus global distribution</h1>
+  <h1 style="color:#F90F40;">COVID19 coronavirus global distribution</h1>
   <h3> Matt Malishev </h3>  
   <h3> @darwinanddavis </h3> 
 </div>    
 
 
-Realtime updates of 2019-nCov global distribution from live scraped [data from the European Centre for Disease Prevention and Control (ECDC)](https://www.ecdc.europa.eu/en/geographical-distribution-2019-ncov-cases).      
+Realtime updates of COVID19 global distribution from live scraped [data from the European Centre for Disease Prevention and Control (ECDC)](https://www.ecdc.europa.eu/en/geographical-distribution-2019-ncov-cases).        
 
 ### Tools    
 
