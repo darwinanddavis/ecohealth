@@ -82,9 +82,9 @@ Build an interactive map of COVID19 coronavirus global distribution using data f
 Data are webscraped daily from the ECDC site, then wrangled, analysed, and mapped in `R`, so data remain public and no internal databases are stored. 
 
 ## Files  
-`ecohealth.Rproj`: `R` project file for maintaining code and generating this document       
-`ecohealth.R`: `R` code for scraping, analysing, and mapping the data   
-`cv_lonlat.csv`: Georeferenced latitude and longitude centroids by country. Generated from `ecohealth.R`.         
+`ecohealth.Rproj` - `R` project file for maintaining code and generating this document       
+`ecohealth.R` - `R` code for scraping, analysing, and mapping the data   
+`cv_lonlat.csv` - Georeferenced latitude and longitude centroids by country. Generated from `ecohealth.R`.         
 
 Data files and map are version controlled and stored on Github and the map is displayed as a separate link for easy sharing (see below).          
 

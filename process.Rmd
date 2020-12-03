@@ -73,7 +73,7 @@ All data wrangling, analysis, and mapping done in `R`.
 [**Download full `R` code**](https://github.com/darwinanddavis/ecohealth/blob/master/ecohealth.R)    
 
 Version: `r params$version`     
-R session info         
+`R` session info           
 ```{r, eval=T,echo=F}
 params$session
 ```      
