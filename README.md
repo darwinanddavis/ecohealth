@@ -30,6 +30,8 @@ pacman::p_load(maps,dplyr,leaflet,xml2,rvest,ggmap,geosphere,htmltools,mapview,p
 </div>  
 
 ### [Online slides for EHA presentation](https://darwinanddavis.github.io/ecohealth/pres)         
+
+### [Download slides (Right click + Save as)](https://github.com/darwinanddavis/ecohealth/raw/master/pres/pres.pdf)   
          
 ******   
 
