@@ -1,0 +1,126 @@
+---
+params:
+    width: 1000 
+    height: 700
+# autosize: true
+header-includes: \usepackage{float}
+always_allow_html: yes
+output:
+  revealjs::revealjs_presentation:
+    css: style/styles.css
+    theme: simple #default moon night black sky
+    highlight: pygments
+    incremental: false
+    center: true
+    transition: slide
+    background-transition: slide
+    mathjax: local # null
+    self_contained: false
+    slide_level: 1
+    # reveal_plugins: ["notes", "search", "zoom", "chalkboard", "menu"] # ALT + mouseclick to zoom
+    reveal_options:
+      slideNumber: true
+      fig_caption: true
+      # fig_width: 10
+      # fig_height: 10
+      # showNotes: true
+      previewLinks: true
+      minScale: 1.0
+      maxScale: 1.0
+---
+
+```{r, set-options, echo = FALSE, cache = FALSE}
+knitr::opts_chunk$set(
+ eval = T, # run all code
+ echo = F, # show code chunks in output 
+ tidy=T, # make output as tidy
+ message = F,  # mask all messages
+ warning = F, # mask all warnings 
+ out.width="100%",
+ size="small", # set code chunk size, 
+ knitr::opts_chunk$set(fig.pos = 'H')
+)
+# options(width = 2000)
+# get device output size
+# dev.size("px")
+```
+
+<!-- install packages -->
+```{r, load packages, include=T, cache=F, message=F, warning=F, results='hide',echo=F}
+packages <- c("ggplot2","dplyr","tidyverse","zoo","RColorBrewer","viridis","plyr","leaflet","plotly","widgetframe","geosphere","lubridate","ggthemes","gridExtra","crosstalk")  
+if (require(packages)) {
+    install.packages(packages,dependencies = T)
+    require(packages)
+}
+suppressPackageStartupMessages(
+  lapply(packages,library,character.only=T) 
+)
+
+# update packages 
+# update.packages(ask = FALSE, checkBuilt = TRUE)
+
+```
+
+<!-- ____________________________________________________________________________ -->
+<!-- start body -->
+
+<!-- ________________________________________________________ slide break -->
+
+### Background  
+#### Computational ecology and modelling      
+
+Model building - simulation, disease, spatial, time series    
+Quantitative data analysis and stats         
+Experiment/model/project design                
+Diverse data - spatial, population, env    
+
+#### Education  
+PhD, computational biology      
+BSc (Hons), ecology      
+
+<!-- ________________________________________________________ slide break -->
+
+---    
+
+#### Movement and environmental change <img style="vertical-align: middle;" src="img/phd.png", height=100>        
+Simulation modelling - big data, models, theory  
+Spatial and time series modelling   
+Hi-res geospatial, location, env, climate data 
+
+#### Infectious disease <img style="vertical-align: middle;" src="img/emory.png", height=100>       
+Population and disease transmission models     
+Test disease control programs, including current WHO recommendations  
+Scaling classic disease compartment models using simulation models  
+
+#### Spatial risk mapping 
+Spatial risk and biosurveillance effort for agricultural pest control      
+
+<!-- ________________________________________________________ slide break -->  
+
+# {data-background="img/pubs.png" data-background-size="95% 95%" data-background-repeat="no-repeat"} 
+
+<!-- ________________________________________________________ slide break -->
+
+---  
+
+### EHA mission        
+
+Infectious disease research and improving public health             
+
+Actively build reproducible data/research tools  
+- Code documentation, web apps, data scraper bots    
+- Reproducibility, data and repo accessibility        
+
+First-hand experience in NFP sector   
+- President of incorporated DGR organisation            
+- Climate policy scientist       
+
+<img style="vertical-align: middle;" src="img/nfp.png", height=200>   
+  
+
+<!-- ________________________________________________________ slide break -->
+
+# {data-background-iframe="https://darwinanddavis.shinyapps.io/airbnb/"}
+  
+<!-- end body -->  
+<!-- ____________________________________________________________________________ -->
