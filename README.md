@@ -24,6 +24,12 @@ pacman::p_load(maps,dplyr,leaflet,xml2,rvest,ggmap,geosphere,htmltools,mapview,p
 </div>
 
 <br>          
+
+<div align="center">
+  <h1>EHA presentation</h1>  
+</div>  
+
+### [Online slides for EHA presentation](https://darwinanddavis.github.io/ecohealth/pres)         
          
 ******   
 

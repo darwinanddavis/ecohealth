@@ -124,3 +124,7 @@ First-hand experience in NFP sector
   
 <!-- end body -->  
 <!-- ____________________________________________________________________________ -->
+
+
+<!-- cp ~/Documents/Data/ecohealth/pres/index.html ~/Documents/Data/ecohealth/docs/pres/index.html   -->
+
