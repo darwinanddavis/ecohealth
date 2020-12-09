@@ -1,0 +1,84 @@
+@import "http://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700";
+@import "http://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,700"; 
+
+.reveal {
+  font-size: 1.5em;
+}
+
+.reveal .backgrounds {
+    z-index:1;
+}
+
+.reveal .slide-background.present {
+    z-index:1;
+}
+
+.reveal .small {
+  font-size: 50%;
+  text-align: center;
+}
+
+.blackbg {
+  background: black;
+  background-color: black; 
+}
+
+.reveal section h1 {
+  color: black;
+  text-align: center; 
+  font-size: 175%; 
+}
+
+.reveal section h2 {
+  color: black;
+  vertical-align: center;
+  text-align: left; 
+}
+
+.reveal section h3,
+.reveal section h4 {
+  color: #8EC549;
+  text-align: left;
+ }
+
+.reveal section h5 {
+  font-size: 60%;
+}
+
+.reveal section p {
+  text-align: left;
+  font-family: Arial;
+  color: black;
+}
+
+.imgincrement {
+	color: white;
+}
+
+.reveal section img { 
+  background:none; 
+  border:none; 
+  box-shadow:none; 
+  }
+
+/*blur background images */
+/*.backgrounds {
+     -webkit-filter: blur(5px);
+     -moz-filter: blur(50px);
+     -o-filter: blur(5px);
+     -ms-filter: blur(5px);
+     filter: blur(5px);
+ }*/
+
+.reveal .intro {
+  background-position: center;
+  background-size: 10%;
+}
+
+/*change title slide 
+<style>
+.slide-background:first-child {
+  background-color: #00FF00;
+}
+</style>*/
+
