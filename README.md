@@ -3,7 +3,7 @@
   <h3> Matt Malishev </h3>  
   <h3> @darwinanddavis </h3> 
 </div>    
-
+  
 
 Realtime updates of COVID19 global distribution from live scraped [data from the European Centre for Disease Prevention and Control (ECDC)](https://www.ecdc.europa.eu/en/geographical-distribution-2019-ncov-cases).        
 
